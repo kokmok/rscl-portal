@@ -25,6 +25,7 @@
         <nav>
             <div class="nav-wrapper">
                 <a href="#!" id="logo"><img src="{{ asset('img/logo.svg') }}" alt="logo rscl.be"></a>
+                <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
                 <ul class="right hide-on-med-and-down">
                     <li><a href="http://forum.rscl.be">Le Forum</a></li>
                     <!-- Dropdown Trigger -->
@@ -32,6 +33,16 @@
                     <li><a class="dropdown-button" href="#!" data-activates="dropdown1">Archives<i class="material-icons right">arrow_drop_down</i></a></li>
                     {% if is_granted('ROLE_ADMIN') %}
                     <li><a class="dropdown-button" href="#!" data-activates="dropdown3">Admin<i class="material-icons right">arrow_drop_down</i></a></li>
+                    {% endif%}
+                </ul>
+                <ul class="side-nav" id="mobile-demo">
+                    <li><a href="http://forum.rscl.be">Le Forum</a></li>
+                    {% if is_granted('ROLE_ADMIN') %}
+                    <li><a  href="#!" >Admin</a>
+                        <ul>
+                            <li><a href="{{ path('new_match') }}">Nouveau match</a></li>
+                        </ul>
+                        </li>
                     {% endif%}
                 </ul>
             </div>

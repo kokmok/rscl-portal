@@ -43,6 +43,9 @@ body {
 nav {
   background-color: #b90e1e; }
 
+#sidenav-overlay {
+  z-index: 997 !important; }
+
 section > h1 {
   background-color: #b90e1e;
   color: #FFF;
