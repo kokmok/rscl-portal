@@ -1,0 +1,12 @@
+{% extends "@FOSUser/layout.html.twig" %}
+
+{% block fos_user_content %}
+<article class="col m12">
+    <div class="card horizontal">
+        <div class="card-stacked">
+            <div class="card-content">
+    {{ include('@FOSUser/Security/login_content.html.twig') }}
+            </div>
+        </div>
+    </div>
+{% endblock fos_user_content %}

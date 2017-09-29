@@ -1,0 +1,56 @@
+{% extends "/layout.html.twig" %}
+{% block main %}
+<div class="row">
+    <div id="leftCol" class="col sm12 m8 l8">
+        <section id="next-game">
+            <h1>Prochain match</h1>
+            {% include 'elements/match-card.html.twig' with {match: nextMatches} %}
+            <div class="row"></div>
+        </section>
+        <section id="last-games">
+            <h1>Derniers matches</h1>
+            {% for match in previousMatches %}
+                {{ include('elements/match-card.html.twig') }}
+                {% endfor %}
+        </section>
+    </div>
+    <div class="rightCol col sm12 m4 l4">
+        {#<section class="classement">#}
+            {#<h1>Classement</h1>#}
+
+            {#<ul class="collection championnat">#}
+                {#<li class="collection-header"><div class="row"><div class="col s2"></div><div class="col s6">Equipe</div><div class="col s2">J.</div><div class="col s2">P.</div></div></li>#}
+                {#<li class="collection-item red z-index-2"><div class="row"><div class="col s2">1</div><div class="col s6"><strong>Standard</strong></div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+                {#<li class="collection-item "><div class="row"><div class="col s2">1</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+                {#<li class="collection-item "><div class="row"><div class="col s2">2</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+                {#<li class="collection-item "><div class="row"><div class="col s2">3</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+                {#<li class="collection-item "><div class="row"><div class="col s2">4</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+                {#<li class="collection-item "><div class="row"><div class="col s2">5</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+                {#<li class="collection-item "><div class="row"><div class="col s2">6</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+                {#<li class="collection-item "><div class="row"><div class="col s2">7</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+                {#<li class="collection-item "><div class="row"><div class="col s2">8</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+                {#<li class="collection-item "><div class="row"><div class="col s2">9</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+                {#<li class="collection-item "><div class="row"><div class="col s2">10</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+                {#<li class="collection-item "><div class="row"><div class="col s2">11</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+                {#<li class="collection-item "><div class="row"><div class="col s2">12</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+                {#<li class="collection-item "><div class="row"><div class="col s2">13</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+                {#<li class="collection-item "><div class="row"><div class="col s2">14</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+                {#<li class="collection-item "><div class="row"><div class="col s2">15</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+                {#<li class="collection-item "><div class="row"><div class="col s2">16</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+
+            {#</ul>#}
+
+        {#</section>#}
+        <section class="buteurs">
+            <h1>Buteurs</h1>
+            
+            <h2>Championnat</h2>
+            {% include 'elements/scorer-board.html.twig' with {events: bestScorersJup} %}
+            <h2>Toutes compétitions</h2>
+            {% include 'elements/scorer-board.html.twig' with {events: bestScorers} %}
+            <h2>De tous les temps</h2>
+            {% include 'elements/scorer-board.html.twig' with {events: bestScorersAllTime} %}
+        </section>
+    </div>
+</div>
+    {% endblock main %}

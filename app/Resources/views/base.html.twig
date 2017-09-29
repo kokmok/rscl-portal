@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>RSCL.be |{% block title %}  Le site non officiel du standard de liège{% endblock %}</title>
+        {% block stylesheets %}
+            <script src="https://use.fontawesome.com/8aee7c2016.js"></script>
+            <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/css/materialize.min.css">
+            <link rel="stylesheet" href="{{ asset("css/datetimepicker.css") }}">
+            <link rel="stylesheet" href="{{ asset("css/style.css") }}">
+        {% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+    </head>
+    <body>
+        {% block body %}
+        {% endblock %}
+        {% block javascripts %}
+            <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.100.2/js/materialize.min.js"></script>
+            <script type="text/javascript" src="http://momentjs.com/downloads/moment.js"></script>
+            <script type="text/javascript" src="{{ asset('js/datetimepicker.js') }}"></script>
+            <script type="text/javascript" src="{{ asset('js/custom.js') }}"></script>
+        {% endblock %}
+    </body>
+</html>

@@ -1,0 +1,69 @@
+<article class="col m12">
+    <div class="card horizontal">
+        <div class="card-stacked">
+            <div class="card-content"><h2 class="center-align light secondaryText"><time datetime="{{ match.date|date('C') }}">{{ match.date|date('d-m-Y') }} | {{ match.date|date('H:i') }}</time></h2>
+                <h3 class="center-align secondaryText">{{ match.competition.name }}</h3>
+                <h1 class="center-align">{{ match.homeTeam.name }} {{ match.scoreHomeFinal }} - {{ match.scoreAwayFinal }} {{ match.awayTeam.name }}</h1>
+                {% if match.events|length %}
+                <div class="row">
+                    
+                    <div class="matchLine hide">
+                        {% for event in match.events %}
+                            {% set alignClass = 'right left-align' %}
+                            {% if event.player.seasons.contains(match.saison) and match.homeTeam.oldId == 1%}
+                                {% set alignClass = 'left right-align' %}
+                            {% endif %}
+                            
+                            <div class="timelineBlock">
+                                <div class="timelineMoment">
+                                    <span class="btn btn-floating">{{ event.minute }}'</span>
+                                </div>
+                                <div class="timelineContent {{ alignClass }}">
+                                    {% if event.player.seasons.contains(match.saison) and match.homeTeam.oldId == 1%}
+                                         {{ event.player}} {{ event.type|matchEventIcon|raw }}
+                                    {% else %}
+                                        {{ event.type|matchEventIcon|raw }} {{ event.player}}
+                                    {% endif %}
+                                </div>
+                            </div>
+                        {% endfor %}
+                        {##}
+                        {#<div class="timelineBlock">#}
+                            {#<div class="timelineMoment">#}
+                                {#<span class="btn btn-floating">48'</span>#}
+                            {#</div>#}
+                            {#<div class="timelineContent left right-align">#}
+                                {#<a href="#">Chop</a>: But#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="timelineBlock">#}
+                            {#<div class="timelineMoment">#}
+                                {#<span class="btn btn-floating">87'</span>#}
+                            {#</div>#}
+                            {#<div class="timelineContent left right-align">#}
+                                {#<a href="#">Carlinhos</a>: Rouge#}
+                            {#</div>#}
+                        {#</div>#}
+                        {#<div class="timelineBlock">#}
+                            {#<div class="timelineMoment">#}
+                                {#<span class="btn btn-floating">91'</span>#}
+                            {#</div>#}
+                            {#<div class="timelineContent right-align left ">#}
+                                {#<a href="#">Mpoku</a>: But#}
+                            {#</div>#}
+                        {#</div>#}
+                    {#</div>#}
+
+
+                </div>
+                    <div class="matchLineSwitcher valign-wrapper center-align"><a href="#">
+                            <i class="material-icons">arrow_drop_down</i>Détails</a>
+                    </div>  
+            </div>
+                {% endif %}
+            {#<div class="card-action right-align">#}
+                {#<a href="#">Voir la fiche du match</a>#}
+            {#</div>#}
+        </div>
+    </div>
+</article>

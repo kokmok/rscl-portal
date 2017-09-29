@@ -1,0 +1,12 @@
+$white: #FFF;
+$primary: #b90e1e;
+$mainTextColor: #222;
+$secondaryTextColor: #aaa;
+.secondaryText {color:$secondaryTextColor;}
+a,.card .card-action a:not(.btn):not(.btn-large):not(.btn-large):not(.btn-floating) {color:$primary;}
+.card .card-action a:not(.btn):not(.btn-large):not(.btn-large):not(.btn-floating):hover{color:darken($primary,50);}
+.btn,.red {background-color: $primary !important;color:$white ;}
+.page-footer {
+  background-color: $primary;
+  .footer-copyright {background: none;}
+}
