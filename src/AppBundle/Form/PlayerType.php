@@ -27,7 +27,7 @@ class PlayerType extends AbstractType
             ->add('contract')
             ->add('weight',null,['required'=>false])
             ->add('height',null,['required'=>false])
-            ->add('position')
+            ->add('position',null,['required'=>false])
             ->add('description',null,['required'=>false])
             ->add('type',ChoiceType::class,['choices'=>Player::TYPE_CHOICES])
             ->add('team',EntityType::class,['class'=>Team::class])
