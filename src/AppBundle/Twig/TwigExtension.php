@@ -25,9 +25,10 @@ class TwigExtension extends \Twig_Extension
         switch ($matchEventType){
             case MatchEvent::TYPE_GOAL :
                 $class = 'fa fa-soccer-ball-o';
-            break;
-            case MatchEvent::TYPE_INJURY :
-                $class = 'fa fa-ambulance';
+                break;
+            case MatchEvent::TYPE_PENO :
+                $class = 'fa fa-soccer-ball-o';
+//                $class = 'fa fa-ambulance';
             break;
             case MatchEvent::TYPE_PLAYER_IN :
                 $class = 'fa  fa-arrow-up';

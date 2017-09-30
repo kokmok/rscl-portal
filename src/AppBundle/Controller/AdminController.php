@@ -4,8 +4,10 @@ namespace AppBundle\Controller;
 
 use AppBundle\Entity\MatchEvent;
 use AppBundle\Entity\MatchGame;
+use AppBundle\Entity\Player;
 use AppBundle\Form\MatchEventType;
 use AppBundle\Form\MatchGameType;
+use AppBundle\Form\PlayerType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -69,8 +71,26 @@ class AdminController extends Controller
             
         }
         else{
-//            dump($matchEventForm->getErrors());
-        }
+            //@TODO add flashbag
+            }
         return $this->redirect($redirectUrl);
+    }
+
+    /**
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     * @Route("/admin/edit-player/{id}", name="edit-player")
+     */
+    public function editPlayerAction(Player $player,Request $request){
+        $form = $this->createForm(PlayerType::class,$player);
+        
+        if ($form->handleRequest($request)->isValid()){
+            $em = $this->get('doctrine.orm.default_entity_manager');
+            $em->persist($player);
+            $em->flush();
+            //@TODO Add flashbag
+            return $this->redirect($request->getRequestUri());
+        }
+        return $this->render('pages/simple-form.html.twig',['form'=>$form->createView(),'title'=>'Edit joueur']);
     }
 }
