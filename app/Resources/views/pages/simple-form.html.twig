@@ -1,4 +1,6 @@
 {% extends "/layout.html.twig" %}
+{% form_theme form 'elements/form-theme.html.twig' %}
+
 {% block main %}
 <h1>{{ title }}</h1>
     {{ form(form) }}

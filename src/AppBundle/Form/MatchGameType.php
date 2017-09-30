@@ -5,8 +5,10 @@ namespace AppBundle\Form;
 use AppBundle\Entity\Arbitre;
 use AppBundle\Entity\Coach;
 use AppBundle\Entity\Competition;
+use AppBundle\Entity\Player;
 use AppBundle\Entity\Saison;
 use AppBundle\Entity\Team;
+use AppBundle\Repository\PlayerRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -31,8 +33,16 @@ class MatchGameType extends AbstractType
             ->add('saison',EntityType::class,['class'=>Saison::class])
             ->add('homeTeam',EntityType::class,['class'=>Team::class])
             ->add('awayTeam',EntityType::class,['class'=>Team::class])
-            ->add('coach',EntityType::class,['class'=>Coach::class])
-            ->add('Envoyer',SubmitType::class)
+            ->add('coach',EntityType::class,['class'=>Coach::class]);
+            if ($builder->getData()->getId()){
+                $builder->add('players',EntityType::class,['class'=>Player::class,'multiple'=>true,'expanded'=>true,'query_builder'=>
+                    function (PlayerRepository $repo) use ($builder){
+                        return $repo->getQueryBuilderForPlayerAtSeason($builder->getData()->getSaison());
+                    }
+                ]);
+            }
+            
+            $builder->add('Envoyer',SubmitType::class)
         ;
     }
     

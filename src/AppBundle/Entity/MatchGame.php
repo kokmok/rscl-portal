@@ -133,6 +133,12 @@ class MatchGame
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\MatchEvent",mappedBy="match")
      */
     private $events;
+
+    /**
+     * @var Player[]
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Player")
+     */
+    private $players;
     
     /**
      * Get id
@@ -572,5 +578,39 @@ class MatchGame
     public function getEvents()
     {
         return $this->events;
+    }
+
+    /**
+     * Add player
+     *
+     * @param \AppBundle\Entity\Player $player
+     *
+     * @return MatchGame
+     */
+    public function addPlayer(\AppBundle\Entity\Player $player)
+    {
+        $this->players[] = $player;
+
+        return $this;
+    }
+
+    /**
+     * Remove player
+     *
+     * @param \AppBundle\Entity\Player $player
+     */
+    public function removePlayer(\AppBundle\Entity\Player $player)
+    {
+        $this->players->removeElement($player);
+    }
+
+    /**
+     * Get players
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPlayers()
+    {
+        return $this->players;
     }
 }

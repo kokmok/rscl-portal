@@ -133,6 +133,12 @@ class MatchGame
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\MatchEvent",mappedBy="match")
      */
     private $events;
+
+    /**
+     * @var Player[]
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Player")
+     */
+    private $players;
     
     /**
      * Get id
@@ -201,6 +207,9 @@ class MatchGame
      */
     public function setDate($date)
     {
+        if (is_string($date)){
+            $date = new \DateTime($date);
+        }
         $this->date = $date;
 
         return $this;
