@@ -29,6 +29,7 @@ class MatchGameRepository extends \Doctrine\ORM\EntityRepository
     public function findNext(){
         $qb = $this->createQueryBuilder('match_game');
         $now = new \DateTime();
+        $now->modify('-105minutes');
         
         $qb->where('match_game.date>:now')
             ->setParameter('now',$now,DateTimeType::DATETIME)

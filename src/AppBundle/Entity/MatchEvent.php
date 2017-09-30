@@ -21,6 +21,8 @@ class MatchEvent
     const TYPE_GOAL = 6;
     const TYPE_INJURY = 7;
     
+    const TYPE_CHOICES = ['goal'=>self::TYPE_GOAL,'blessure'=>self::TYPE_INJURY,'sortie'=>self::TYPE_PLAYER_OUT,'entrée'=>self::TYPE_PLAYER_IN,'jaune'=>self::TYPE_YELLOW,'deuxieme jaune'=>self::TYPE_YELLOW_SECOND,'rouge'=>self::TYPE_RED];
+    
     use MigrableTrait;
     /**
      * @var int

@@ -1,12 +1,14 @@
 {% extends "/layout.html.twig" %}
 {% block main %}
 <div class="row">
-    <div id="leftCol" class="col sm12 m8 l8">
+    <div id="leftCol" class="col s12 m12 l8">
+        {% if nextMatches is not null %}
         <section id="next-game">
             <h1>Prochain match</h1>
-            {% include 'elements/match-card.html.twig' with {match: nextMatches} %}
+            {% include 'elements/match-card.html.twig' with {match: nextMatches,eventForm: matchEventForm} %}
             <div class="row"></div>
         </section>
+        {% endif %}
         <section id="last-games">
             <h1>Derniers matches</h1>
             {% for match in previousMatches %}
@@ -14,7 +16,7 @@
                 {% endfor %}
         </section>
     </div>
-    <div class="rightCol col sm12 m4 l4">
+    <div class="rightCol col s12 m12 l4">
         {#<section class="classement">#}
             {#<h1>Classement</h1>#}
 

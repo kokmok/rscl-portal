@@ -9,6 +9,7 @@ use AppBundle\Entity\Saison;
 use AppBundle\Entity\Team;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -23,7 +24,7 @@ class MatchGameType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('date',TextType::class,['attr'=>['class'=>'datepicker','widget' => 'single_text',]])
+            ->add('date',DateTimeType::class,['attr'=>['class'=>'datepicker'],'widget' => 'single_text','format'=>'dd-MM-yyyy HH:mm'])
             ->add('description')
             ->add('competition',EntityType::class,['class'=>Competition::class])
             ->add('arbitre',EntityType::class,['class'=>Arbitre::class])

@@ -61,9 +61,26 @@
                     </div>  
             </div>
                 {% endif %}
-            {#<div class="card-action right-align">#}
-                {#<a href="#">Voir la fiche du match</a>#}
-            {#</div>#}
+                {% if is_granted('ROLE_ADMIN') %}
+                    <div class="card-action right-align">
+                        <a href="{{ path('edit_match',{id: match.id}) }}" class="btn">Editer</a>
+                    {% if eventForm is defined %}
+                        <div class="card-panel grey lighten-4">
+                            <h6>Ajouter un evenement</h6>
+                            {{ 
+                                form_start(
+                                    eventForm, 
+                                    {'action': path('add_match_event',
+                                        {id:match.id,'redirectUrl': app.request.requestUri}
+                                        )}
+                                        ) 
+                            }}
+                            {{ form(eventForm) }}
+                            {{ form_end(eventForm) }}
+                        </div>
+                        {% endif %}
+                    </div>
+                {% endif %}
         </div>
     </div>
 </article>

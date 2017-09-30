@@ -2,6 +2,8 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\MatchEvent;
+use AppBundle\Form\MatchEventType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -24,12 +26,17 @@ class DefaultController extends Controller
 //        dump($bestScorersEvents);
 //        die();
 //        $season = $em->getRepository('AppBundle:Saison')->findOneBy(['running'=>true]);
-        
-        
+        $matchEventType = null;
+        if (null !== $nextMatch){
+            $matchEvent = new MatchEvent();
+            $matchEvent->setMatch($nextMatch);
+            $matchEventType = $this->createForm(MatchEventType::class,$matchEvent);
+        }
         
         
         
         return $this->render('pages/home.html.twig', [
+            'matchEventForm'=>$matchEventType->createView(),
             'previousMatches'=>$previousMatches,
             'nextMatches'=>$nextMatch,
             'bestScorers'=>$bestScorersEvents,

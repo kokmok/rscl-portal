@@ -2,6 +2,8 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Saison;
+
 /**
  * PlayerRepository
  *
@@ -10,4 +12,12 @@ namespace AppBundle\Repository;
  */
 class PlayerRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getQueryBuilderForPlayerAtSeason(Saison $season){
+        $qb = $this->createQueryBuilder('player');
+        $qb->leftJoin('player.seasons','seasons')
+            ->where($qb->expr()->in('seasons.id',[$season->getId()]))
+            ;
+        
+        return $qb;
+    }
 }

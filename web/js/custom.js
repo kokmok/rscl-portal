@@ -12,7 +12,7 @@ $(function(){
     //     close: 'Ok',
     //     closeOnSelect: false // Close upon selecting a date,
     // });
-    $('.datepicker').bootstrapMaterialDatePicker({format: 'YYYY-MM-DD HH:mm'});
+    $('.datepicker').bootstrapMaterialDatePicker({format: 'DD-MM-YYYY HH:mm'});
 
 })
 
