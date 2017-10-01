@@ -15,7 +15,7 @@ class MatchGameRepository extends \Doctrine\ORM\EntityRepository
     public function findLast($limit = 5){
         $qb = $this->createQueryBuilder('match_game');
         $yesterday = new \DateTime();
-        $yesterday->modify('-1day');
+        $yesterday->modify('+105minutes');
         $qb->where('match_game.date<:yesterday')
             ->setParameter('yesterday',$yesterday,DateTimeType::DATETIME)
             ->setMaxResults($limit)
