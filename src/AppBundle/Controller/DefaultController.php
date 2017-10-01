@@ -36,7 +36,7 @@ class DefaultController extends Controller
         
         
         return $this->render('pages/home.html.twig', [
-            'matchEventForm'=>$matchEventType->createView(),
+            'matchEventForm'=>$matchEventType !== null ? $matchEventType->createView() : null,
             'previousMatches'=>$previousMatches,
             'nextMatches'=>$nextMatch,
             'bestScorers'=>$bestScorersEvents,

@@ -64,7 +64,7 @@
                 {% if is_granted('ROLE_ADMIN') %}
                     <div class="card-action right-align">
                         <a href="{{ path('edit_match',{id: match.id}) }}" class="btn">Editer</a>
-                    {% if eventForm is defined %}
+                    {% if eventForm is defined and eventForm is not null  %}
                         <div class="card-panel grey lighten-4">
                             <h6>Ajouter un evenement</h6>
                             {{ 
