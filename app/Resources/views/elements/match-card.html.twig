@@ -10,7 +10,7 @@
                     <div class="matchLine hide">
                         {% for event in match.events %}
                             {% set alignClass = 'right left-align' %}
-                            {% if event.player.seasons.contains(match.saison) and match.homeTeam.oldId == 1%}
+                            {% if event.player is not null and match.homeTeam.oldId == 1%}
                                 {% set alignClass = 'left right-align' %}
                             {% endif %}
                             
@@ -20,9 +20,9 @@
                                 </div>
                                 <div class="timelineContent {{ alignClass }}">
                                     {% if event.player.seasons.contains(match.saison) and match.homeTeam.oldId == 1%}
-                                         {{ event.player}} {{ event.type|matchEventIcon|raw }}
+                                         {{ event.player is not null ? event.player : event.playerName }} {{ event.type|matchEventIcon|raw }}
                                     {% else %}
-                                        {{ event.type|matchEventIcon|raw }} {{ event.player}}
+                                        {{ event.type|matchEventIcon|raw }} {{ event.player is not null ? event.player : event.playerName }}
                                     {% endif %}
                                 </div>
                             </div>
