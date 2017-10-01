@@ -9,9 +9,9 @@
                     
                     <div class="matchLine hide">
                         {% for event in match.events %}
-                            {% set alignClass = 'left right-align' %}
+                            {% set alignClass = 'right left-align' %}
                             {% if event.player is not null and match.homeTeam.oldId == 1%}
-                                {% set alignClass = 'right left-align' %}
+                                {% set alignClass = 'left right-align' %}
                             {% endif %}
                             
                             <div class="timelineBlock">
