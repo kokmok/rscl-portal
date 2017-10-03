@@ -29,6 +29,10 @@ class Team
      * @ORM\Column(name="name", type="string", length=64)
      */
     private $name;
+    public function __toString()
+    {
+        return $this->name;
+    }
 
 
     /**

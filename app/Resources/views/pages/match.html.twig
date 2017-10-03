@@ -2,46 +2,87 @@
 {% block main %}
     <div class="row">
         <div id="leftCol" class="col s12 m12 l8">
-           <section id="game">
-                <h1>Saison {{ match.saison.name }}</h1>
+           <section >
+                <h1>Fiche match</h1>
                 {% include 'elements/match-card.html.twig'  %}
+                {#<article >#}
+               <div class="clearfix"></div>
+               <h1>Equipe</h1>
+               <div class="card horizontal">
+                   <div class="card-stacked">
+                       <div class="card-content">
+               <table>
+                   <thead>
+                   <tr>
+                       <th>Joueur</th>
+                       <th>Minutes jouées</th>
+                       <th>Cote</th>
+                   </tr>
+                   </thead>
+                   <tbody>
+                       {% for vote in match.votes if match.votes|length%}
+                           <tr>
+                               <td>{{ vote.player }}</td>
+                               <td>{{ vote.minutesPlayed }}'</td>
+                               <td>{% if vote.nbrVotes %}{{ vote.averageCote }}{% else %} -{% endif %} ({{ vote.nbrVotes }} votes)</td>
+                           </tr>
+                       {% else %}
+                           {% for player in match.players %}
+                               <tr>
+                                   <td>{{ player }}</td>
+                                   <td>-</td>
+                                   <td>-</td>
+                               </tr>
+                           {% endfor %}
+                       {% endfor %}
+                   </tbody>
+               </table>
+                       </div>
+                       <div class="card-action right-align">
+                           <p class="secondaryText">Coach : {{ match.coach }}</p>
+                       </div>
+                   </div>
+               </div>
+                {#</article>#}
                 {#<div class="row"></div>#}
-                </section>
+            </section>
             {#{% endif %}#}
            
         </div>
         <div class="rightCol col s12 m12 l4">
+            {% if classement|length %}
             <section class="classement">
             <h1>Classement {{ match.saison.name }}</h1>
-            
-            <ul class="collection championnat">
-            <li class="collection-header"><div class="row"><div class="col s2"></div><div class="col s6">Equipe</div><div class="col s2">J.</div><div class="col s2">P.</div></div></li>
-            {% for row in classement %}
-                <li class="collection-item{% if row.team.oldId ==1 %} red z-index-2{% endif %}"><div class="row"><div class="col s2">{{ loop.index }}</div><div class="col s6">{{ row.team.name }}</div><div class="col s2">{{ row.played }}</div><div class="col s2">{{ row.points }}</div></div></li>
-
-            {% endfor %}
+                <ul class="collection championnat">
+                    <li class="collection-header"><div class="row"><div class="col s2"></div><div class="col s6">Equipe</div><div class="col s2">J.</div><div class="col s2">P.</div></div></li>
+                {% for row in classement %}
+                    {#{{ dump(row) }}#}
+                    <li class="collection-item{% if row.teamName == "Standard" or (row.team is not null and row.team.oldId ==1) %} red z-index-2{% endif %}"><div class="row"><div class="col s2">{{ loop.index }}</div><div class="col s6">{{ row.teamName }}</div><div class="col s2">{{ row.played }}</div><div class="col s2">{{ row.points }}</div></div></li>
                 
-                {#<li class="collection-item red z-index-2"><div class="row"><div class="col s2">1</div><div class="col s6"><strong>Standard</strong></div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
-            {#<li class="collection-item "><div class="row"><div class="col s2">1</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
-            {#<li class="collection-item "><div class="row"><div class="col s2">2</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
-            {#<li class="collection-item "><div class="row"><div class="col s2">3</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
-            {#<li class="collection-item "><div class="row"><div class="col s2">4</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
-            {#<li class="collection-item "><div class="row"><div class="col s2">5</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
-            {#<li class="collection-item "><div class="row"><div class="col s2">6</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
-            {#<li class="collection-item "><div class="row"><div class="col s2">7</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
-            {#<li class="collection-item "><div class="row"><div class="col s2">8</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
-            {#<li class="collection-item "><div class="row"><div class="col s2">9</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
-            {#<li class="collection-item "><div class="row"><div class="col s2">10</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
-            {#<li class="collection-item "><div class="row"><div class="col s2">11</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
-            {#<li class="collection-item "><div class="row"><div class="col s2">12</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
-            {#<li class="collection-item "><div class="row"><div class="col s2">13</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
-            {#<li class="collection-item "><div class="row"><div class="col s2">14</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
-            {#<li class="collection-item "><div class="row"><div class="col s2">15</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
-            {#<li class="collection-item "><div class="row"><div class="col s2">16</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
-
-            </ul>
+                {% endfor %}
+                    
+                    {#<li class="collection-item red z-index-2"><div class="row"><div class="col s2">1</div><div class="col s6"><strong>Standard</strong></div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+                {#<li class="collection-item "><div class="row"><div class="col s2">1</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+                {#<li class="collection-item "><div class="row"><div class="col s2">2</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+                {#<li class="collection-item "><div class="row"><div class="col s2">3</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+                {#<li class="collection-item "><div class="row"><div class="col s2">4</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+                {#<li class="collection-item "><div class="row"><div class="col s2">5</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+                {#<li class="collection-item "><div class="row"><div class="col s2">6</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+                {#<li class="collection-item "><div class="row"><div class="col s2">7</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+                {#<li class="collection-item "><div class="row"><div class="col s2">8</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+                {#<li class="collection-item "><div class="row"><div class="col s2">9</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+                {#<li class="collection-item "><div class="row"><div class="col s2">10</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+                {#<li class="collection-item "><div class="row"><div class="col s2">11</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+                {#<li class="collection-item "><div class="row"><div class="col s2">12</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+                {#<li class="collection-item "><div class="row"><div class="col s2">13</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+                {#<li class="collection-item "><div class="row"><div class="col s2">14</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+                {#<li class="collection-item "><div class="row"><div class="col s2">15</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+                {#<li class="collection-item "><div class="row"><div class="col s2">16</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+    
+                </ul>
 
             </section>
+            {% endif %}
             <section class="buteurs">
                 <h1>Buteurs</h1>
 

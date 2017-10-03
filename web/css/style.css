@@ -120,35 +120,35 @@ header .caption {
 .material-icons {
   vertical-align: middle !important; }
 
-.classement .collection-header, .buteurs .collection-header {
+.classement .collection-header, .buteurs .collection-header, .game .collection-header {
   border-bottom: 1px solid #aaa; }
-.classement .collection-item, .buteurs .collection-item {
+.classement .collection-item, .buteurs .collection-item, .game .collection-item {
   clear: both;
   padding: 10px 20px 10px 0; }
-  .classement .collection-item .row, .buteurs .collection-item .row {
+  .classement .collection-item .row, .buteurs .collection-item .row, .game .collection-item .row {
     padding: 0;
     margin: 0; }
-.classement h2, .buteurs h2 {
+.classement h2, .buteurs h2, .game h2 {
   background-color: #b90e1e;
   color: #FFF;
   margin-bottom: 0; }
-.classement .championnat .collection-item:nth-child(7), .buteurs .championnat .collection-item:nth-child(7) {
+.classement .championnat .collection-item:nth-child(7), .buteurs .championnat .collection-item:nth-child(7), .game .championnat .collection-item:nth-child(7) {
   border-bottom-color: #b90e1e; }
-.classement .championnat .collection-item:nth-child(16), .buteurs .championnat .collection-item:nth-child(16) {
+.classement .championnat .collection-item:nth-child(16), .buteurs .championnat .collection-item:nth-child(16), .game .championnat .collection-item:nth-child(16) {
   border-bottom-color: #b90e1e; }
-.classement .championnat .collection-item:nth-child(18), .buteurs .championnat .collection-item:nth-child(18) {
+.classement .championnat .collection-item:nth-child(18), .buteurs .championnat .collection-item:nth-child(18), .game .championnat .collection-item:nth-child(18) {
   background-color: #aaa; }
-.classement .collection-header, .buteurs .collection-header {
+.classement .collection-header, .buteurs .collection-header, .game .collection-header {
   font-size: 1.3em;
   padding: 10px 20px;
   margin: 0;
   padding: 10px 20px 10px 0; }
-  .classement .collection-header .row, .buteurs .collection-header .row {
+  .classement .collection-header .row, .buteurs .collection-header .row, .game .collection-header .row {
     padding: 0;
     margin: 0; }
-.classement .collection .s1, .buteurs .collection .s1 {
+.classement .collection .s1, .buteurs .collection .s1, .game .collection .s1 {
   text-align: right; }
-.classement .collection .s2, .buteurs .collection .s2 {
+.classement .collection .s2, .buteurs .collection .s2, .game .collection .s2 {
   text-align: center; }
 
 /*# sourceMappingURL=style.css.map */

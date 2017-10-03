@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * Saison
  *
- * @ORM\Table(name="saison")
+ * @ORM\Table(name="season")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\SaisonRepository")
  */
 class Saison
@@ -34,8 +34,13 @@ class Saison
      * @ORM\Column(type="boolean")
      */
     private $running;
+    
+    
 
-
+    public function __toString()
+    {
+        return $this->name;
+    }
     /**
      * Get id
      *

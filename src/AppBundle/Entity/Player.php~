@@ -12,6 +12,14 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Player
 {
+    
+    const TYPE_KEEPER = 1;
+    const TYPE_DEFENDER = 2;
+    const TYPE_MIDFIELDER = 3;
+    const TYPE_SCORER = 4;
+    
+    const TYPE_CHOICES = ['Gardien'=>self::TYPE_KEEPER,'Defenseur'=>self::TYPE_DEFENDER,'Milieu'=>self::TYPE_MIDFIELDER,'Attaquant'=>self::TYPE_SCORER];
+    
     use MigrableTrait;
     use HasPicture;
     use HasNationality;
@@ -177,6 +185,11 @@ class Player
     public function getLastName()
     {
         return $this->lastName;
+    }
+    
+    public function __toString()
+    {
+        return $this->firstName.' '.$this->lastName;
     }
 
     /**

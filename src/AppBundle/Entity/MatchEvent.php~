@@ -12,6 +12,17 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class MatchEvent
 {
+    
+    const TYPE_YELLOW = 1;
+    const TYPE_YELLOW_SECOND = 2;
+    const TYPE_RED = 3;
+    const TYPE_PLAYER_IN = 4;
+    const TYPE_PLAYER_OUT = 5;
+    const TYPE_GOAL = 6;
+    const TYPE_PENO = 7;
+    
+    const TYPE_CHOICES = ['goal'=>self::TYPE_GOAL,'penalty'=>self::TYPE_PENO,'sortie'=>self::TYPE_PLAYER_OUT,'entrée'=>self::TYPE_PLAYER_IN,'jaune'=>self::TYPE_YELLOW,'deuxieme jaune'=>self::TYPE_YELLOW_SECOND,'rouge'=>self::TYPE_RED];
+    
     use MigrableTrait;
     /**
      * @var int
@@ -165,5 +176,53 @@ class MatchEvent
     public function getPlayer()
     {
         return $this->player;
+    }
+
+    /**
+     * Set playerName
+     *
+     * @param string $playerName
+     *
+     * @return MatchEvent
+     */
+    public function setPlayerName($playerName)
+    {
+        $this->playerName = $playerName;
+
+        return $this;
+    }
+
+    /**
+     * Get playerName
+     *
+     * @return string
+     */
+    public function getPlayerName()
+    {
+        return $this->playerName;
+    }
+
+    /**
+     * Set team
+     *
+     * @param \AppBundle\Entity\Team $team
+     *
+     * @return MatchEvent
+     */
+    public function setTeam(\AppBundle\Entity\Team $team = null)
+    {
+        $this->team = $team;
+
+        return $this;
+    }
+
+    /**
+     * Get team
+     *
+     * @return \AppBundle\Entity\Team
+     */
+    public function getTeam()
+    {
+        return $this->team;
     }
 }

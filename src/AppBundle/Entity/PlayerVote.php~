@@ -52,9 +52,15 @@ class PlayerVote
 
     /**
      * @var MatchGame
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\MatchGame")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\MatchGame",inversedBy="votes")
      */
     private $match;
+
+    /**
+     * @var float
+     * @ORM\Column(type="float")
+     */
+    private $averageCote;
 
    
 

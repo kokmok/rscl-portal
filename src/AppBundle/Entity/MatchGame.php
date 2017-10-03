@@ -139,6 +139,13 @@ class MatchGame
      * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Player")
      */
     private $players;
+
+    /**
+     * @var PlayerVote
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\PlayerVote",mappedBy="match")
+     * @ORM\OrderBy({"averageCote" = "DESC"})
+     */
+    private $votes;
     
     /**
      * Get id
@@ -612,5 +619,39 @@ class MatchGame
     public function getPlayers()
     {
         return $this->players;
+    }
+
+    /**
+     * Add vote
+     *
+     * @param \AppBundle\Entity\PlayerVote $vote
+     *
+     * @return MatchGame
+     */
+    public function addVote(\AppBundle\Entity\PlayerVote $vote)
+    {
+        $this->votes[] = $vote;
+
+        return $this;
+    }
+
+    /**
+     * Remove vote
+     *
+     * @param \AppBundle\Entity\PlayerVote $vote
+     */
+    public function removeVote(\AppBundle\Entity\PlayerVote $vote)
+    {
+        $this->votes->removeElement($vote);
+    }
+
+    /**
+     * Get votes
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getVotes()
+    {
+        return $this->votes;
     }
 }

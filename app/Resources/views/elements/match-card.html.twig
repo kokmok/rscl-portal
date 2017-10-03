@@ -73,9 +73,11 @@
                     </div>  
             </div>
                 {% endif %}
+                {% if app.request.get('_route') != 'view_match' %}
                 <div class="card-action right-align">
                     <a href="{{ path('view_match',{id: match.id}) }}" class="">La fiche du match</a>
                 </div>
+                {% endif %}
                 {% if is_granted('ROLE_ADMIN') %}
                     <div class="card-action right-align">
                         <a href="{{ path('edit_match',{id: match.id}) }}" class="btn">Editer</a>

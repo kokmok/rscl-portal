@@ -52,9 +52,15 @@ class PlayerVote
 
     /**
      * @var MatchGame
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\MatchGame")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\MatchGame",inversedBy="votes")
      */
     private $match;
+
+    /**
+     * @var float
+     * @ORM\Column(type="float")
+     */
+    private $averageCote;
 
    
 
@@ -212,5 +218,29 @@ class PlayerVote
     public function getSaison()
     {
         return $this->saison;
+    }
+
+    /**
+     * Set averageCote
+     *
+     * @param float $averageCote
+     *
+     * @return PlayerVote
+     */
+    public function setAverageCote($averageCote)
+    {
+        $this->averageCote = $averageCote;
+
+        return $this;
+    }
+
+    /**
+     * Get averageCote
+     *
+     * @return float
+     */
+    public function getAverageCote()
+    {
+        return $this->averageCote;
     }
 }
