@@ -3,6 +3,7 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\MatchEvent;
+use AppBundle\Entity\Saison;
 
 /**
  * MatchEventRepository
@@ -26,6 +27,51 @@ class MatchEventRepository extends \Doctrine\ORM\EntityRepository
             ->addSelect('match')
             ->leftJoin('match.competition','competition')
             ->andWhere('competition.oldId!=11')//On exclut les amicaux
+            ->addSelect('count(match_event.player) AS goals')
+            ->addSelect('count(match_event.match) AS matchs')
+            ->orderBy('goals','DESC')
+        ;
+        
+        return $qb->getQuery()->getResult();
+        
+    }
+    public function findBestScorersEventBySaison(Saison $saison){
+        $qb = $this->createQueryBuilder('match_event');
+        
+        $qb->leftJoin('match_event.match','match')
+            ->leftJoin('match_event.player','player')
+            ->leftJoin('match.saison','saison')
+            ->where('match.saison=:saison')
+            ->setParameter('saison',$saison)
+            ->andWhere('match_event.type=:eventType')
+            ->setParameter('eventType',MatchEvent::TYPE_GOAL)
+            ->groupBy('match_event.player')
+            ->addSelect('player')
+            ->addSelect('match')
+            ->leftJoin('match.competition','competition')
+            ->andWhere('competition.oldId!=11')//On exclut les amicaux
+            ->addSelect('count(match_event.player) AS goals')
+            ->addSelect('count(match_event.match) AS matchs')
+            ->orderBy('goals','DESC')
+        ;
+        
+        return $qb->getQuery()->getResult();
+        
+    }public function findBestScorersEventJupilerBySaison(Saison $saison){
+        $qb = $this->createQueryBuilder('match_event');
+        
+        $qb->leftJoin('match_event.match','match')
+            ->leftJoin('match_event.player','player')
+            ->leftJoin('match.saison','saison')
+            ->where('match.saison=:saison')
+            ->setParameter('saison',$saison)
+            ->andWhere('match_event.type=:eventType')
+            ->setParameter('eventType',MatchEvent::TYPE_GOAL)
+            ->groupBy('match_event.player')
+            ->addSelect('player')
+            ->addSelect('match')
+            ->leftJoin('match.competition','competition')
+            ->andWhere('competition.oldId=1')
             ->addSelect('count(match_event.player) AS goals')
             ->addSelect('count(match_event.match) AS matchs')
             ->orderBy('goals','DESC')
