@@ -58,7 +58,7 @@ class PlayerVote
 
     /**
      * @var float
-     * @ORM\Column(type="float")
+     * @ORM\Column(type="float",nullable=true)
      */
     private $averageCote;
 
