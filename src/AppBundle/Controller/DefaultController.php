@@ -26,10 +26,8 @@ class DefaultController extends Controller
         $bestScorersEventsAllTime = $em->getRepository('AppBundle:MatchEvent')->findBestScorersEventAllTime();
         
         $firstSeason = $this->get('doctrine.orm.default_entity_manager')->getRepository('AppBundle:Saison')->findOneBy([],['name'=>'ASC']);
+
         
-//        dump($bestScorersEvents);
-//        die();
-//        $season = $em->getRepository('AppBundle:Saison')->findOneBy(['running'=>true]);
         $matchEventType = null;
         if (null !== $nextMatch){
             $matchEvent = new MatchEvent();
@@ -59,8 +57,11 @@ class DefaultController extends Controller
         $bestScorersEvents = $this->get('doctrine.orm.default_entity_manager')->getRepository('AppBundle:MatchEvent')->findBestScorersEventBySaison($matchGame->getSaison());
         $bestScorersEventsJup = $this->get('doctrine.orm.default_entity_manager')->getRepository('AppBundle:MatchEvent')->findBestScorersEventJupilerBySaison($matchGame->getSaison());
 
+        $matchEvent = new MatchEvent();
+        $matchEvent->setMatch($matchGame);
+        $matchEventType = $this->createForm(MatchEventType::class,$matchEvent);
 
-        return $this->render('pages/match.html.twig',['bestScorer'=>$bestScorersEvents,'bestScorerJup'=>$bestScorersEventsJup,'match'=>$matchGame,'classement'=>$classement]);
+        return $this->render('pages/match.html.twig',['eventForm'=>$matchEventType->createView(),'bestScorer'=>$bestScorersEvents,'bestScorerJup'=>$bestScorersEventsJup,'match'=>$matchGame,'classement'=>$classement]);
         
         
     }

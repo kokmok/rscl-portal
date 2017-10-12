@@ -1,4 +1,5 @@
 {% extends "/layout.html.twig" %}
+{% block metaDescription %}Match du Standard de Liège : {{ match.homeTeam.name }} {{ match.scoreHomeFinal }} - {{ match.scoreAwayFinal }} {{ match.awayTeam.name }}{% endblock metaDescription %}
 {% block main %}
     <div class="row">
         <div id="leftCol" class="col s12 m12 l8">
@@ -22,14 +23,18 @@
                    <tbody>
                        {% for vote in match.votes if match.votes|length%}
                            <tr>
-                               <td>{{ vote.player }}</td>
+                               <td>{{ vote.player }}{% if is_granted('ROLE_ADMIN') %}
+                                       <a href="{{ path('edit-player',{id:vote.player.id }) }}"><i class="material-icons">edit</i></a>
+                                   {% endif %}</td>
                                <td>{{ vote.minutesPlayed }}'</td>
                                <td>{% if vote.nbrVotes %}{{ vote.averageCote }}{% else %} -{% endif %} ({{ vote.nbrVotes }} votes)</td>
                            </tr>
                        {% else %}
                            {% for player in match.players %}
                                <tr>
-                                   <td>{{ player }}</td>
+                                   <td>{{ player }}{% if is_granted('ROLE_ADMIN') %}
+                                           <a href="{{ path('edit-player',{id:player.id }) }}"><i class="material-icons">edit</i></a>
+                                       {% endif %}</td>
                                    <td>-</td>
                                    <td>-</td>
                                </tr>
@@ -50,17 +55,17 @@
            
         </div>
         <div class="rightCol col s12 m12 l4">
-            {% if classement|length %}
-            <section class="classement">
-            <h1>Classement {{ match.saison.name }}</h1>
-                <ul class="collection championnat">
-                    <li class="collection-header"><div class="row"><div class="col s2"></div><div class="col s6">Equipe</div><div class="col s2">J.</div><div class="col s2">P.</div></div></li>
-                {% for row in classement %}
+            {#{% if classement|length %}#}
+            {#<section class="classement">#}
+            {#<h1>Classement {{ match.saison.name }}</h1>#}
+                {#<ul class="collection championnat">#}
+                    {#<li class="collection-header"><div class="row"><div class="col s2"></div><div class="col s6">Equipe</div><div class="col s2">J.</div><div class="col s2">P.</div></div></li>#}
+                {#{% for row in classement %}#}
                     {#{{ dump(row) }}#}
-                    <li class="collection-item{% if row.teamName == "Standard" or (row.team is not null and row.team.oldId ==1) %} red z-index-2{% endif %}"><div class="row"><div class="col s2">{{ loop.index }}</div><div class="col s6">{{ row.teamName }}</div><div class="col s2">{{ row.played }}</div><div class="col s2">{{ row.points }}</div></div></li>
-                
-                {% endfor %}
-                    
+                    {#<li class="collection-item{% if row.teamName == "Standard" or (row.team is not null and row.team.oldId ==1) %} red z-index-2{% endif %}"><div class="row"><div class="col s2">{{ loop.index }}</div><div class="col s6">{{ row.teamName }}</div><div class="col s2">{{ row.played }}</div><div class="col s2">{{ row.points }}</div></div></li>#}
+                {##}
+                {#{% endfor %}#}
+                    {##}
                     {#<li class="collection-item red z-index-2"><div class="row"><div class="col s2">1</div><div class="col s6"><strong>Standard</strong></div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
                 {#<li class="collection-item "><div class="row"><div class="col s2">1</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
                 {#<li class="collection-item "><div class="row"><div class="col s2">2</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
@@ -78,11 +83,11 @@
                 {#<li class="collection-item "><div class="row"><div class="col s2">14</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
                 {#<li class="collection-item "><div class="row"><div class="col s2">15</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
                 {#<li class="collection-item "><div class="row"><div class="col s2">16</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
-    
-                </ul>
+    {##}
+                {#</ul>#}
 
-            </section>
-            {% endif %}
+            {#</section>#}
+            {#{% endif %}#}
             <section class="buteurs">
                 <h1>Buteurs</h1>
 
