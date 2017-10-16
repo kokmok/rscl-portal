@@ -67,6 +67,10 @@ class AdminController extends Controller
         if ($matchEventForm->handleRequest($request)->isValid()){
             $em = $this->get('doctrine.orm.default_entity_manager');
             $em->persist($matchEvent);
+            if ($matchEvent->getType() === MatchEvent::TYPE_GOAL){
+                $match->addGoal($matchEvent);
+                $em->persist($match);
+            }
             $em->flush();
             
         }

@@ -12,6 +12,7 @@ use AppBundle\Repository\PlayerRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -39,7 +40,14 @@ class MatchGameType extends AbstractType
                     function (PlayerRepository $repo) use ($builder){
                         return $repo->getQueryBuilderForPlayerAtSeason($builder->getData()->getSaison());
                     }
-                ]);
+                ])
+                ->add('scoreHomeFinal',IntegerType::class,['required'=>false])
+                ->add('scoreAwayFinal',IntegerType::class,['required'=>false])
+                ->add('scoreHomeProlong',IntegerType::class,['required'=>false])
+                ->add('scoreAwayProlong',IntegerType::class,['required'=>false])
+                ->add('scoreHomePen',IntegerType::class,['required'=>false])
+                ->add('scoreAwayPen',IntegerType::class,['required'=>false])
+                ;
             }
             
             $builder->add('Envoyer',SubmitType::class)

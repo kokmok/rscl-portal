@@ -140,6 +140,7 @@ class MatchEvent
     public function setMatch(\AppBundle\Entity\MatchGame $match = null)
     {
         $this->match = $match;
+        
 
         return $this;
     }

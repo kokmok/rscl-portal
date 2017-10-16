@@ -31,7 +31,7 @@
                                     <span class="btn btn-floating">{{ event.minute }}'</span>
                                 </div>
                                 <div class="timelineContent {{ alignClass }}">
-                                    {% if event.player.seasons.contains(match.saison) and match.homeTeam.oldId == 1%}
+                                    {% if event.player is not null and event.player.seasons.contains(match.saison) and match.homeTeam.oldId == 1%}
                                          {{ event.player is not null ? event.player : event.playerName }} {{ event.type|matchEventIcon|raw }}
                                     {% else %}
                                         {{ event.type|matchEventIcon|raw }} {{ event.player is not null ? event.player : event.playerName }}

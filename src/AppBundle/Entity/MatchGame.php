@@ -3,6 +3,9 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
  * MatchGame
@@ -563,6 +566,7 @@ class MatchGame
     public function addEvent(\AppBundle\Entity\MatchEvent $event)
     {
         $this->events[] = $event;
+       
 
         return $this;
     }
@@ -575,6 +579,10 @@ class MatchGame
     public function removeEvent(\AppBundle\Entity\MatchEvent $event)
     {
         $this->events->removeElement($event);
+        if ($event->getType() === MatchEvent::TYPE_GOAL)
+        {
+            $this->removeGoal($event);
+        }
     }
 
     /**
@@ -653,5 +661,50 @@ class MatchGame
     public function getVotes()
     {
         return $this->votes;
+    }
+    
+    public function addGoal(MatchEvent $event){
+        if (!$event->getType() === MatchEvent::TYPE_GOAL){
+            throw new \Exception('Goal event must be type : '.MatchEvent::TYPE_GOAL);
+        }
+        if ($event->getTeam() !== null){
+          if ($event->getTeam() === $this->homeTeam) {
+                $this->scoreHomeFinal ++;
+          }
+          else {
+              $this->scoreAwayFinal ++;
+          }
+        }else {//Si l'event n'a pas d'équipe c'est probablement que le standard a encaissé.
+            if ($this->homeTeam->getOldId() == 1){
+                $this->scoreAwayFinal ++;
+            }
+            else{
+                $this->scoreHomeFinal ++;
+            }
+            
+        }
+        
+    }
+    public function removeGoal(MatchEvent $event){
+        if (!$event->getType() === MatchEvent::TYPE_GOAL){
+            throw new \Exception('Goal event must be type : '.MatchEvent::TYPE_GOAL);
+        }
+        if ($event->getTeam() !== null){
+          if ($event->getTeam() === $this->homeTeam) {
+                $this->scoreHomeFinal --;
+          }
+          else {
+              $this->scoreAwayFinal --;
+          }
+        }else {//Si l'event n'a pas d'équipe c'est probablement que le standard n'a pas encaissé.
+            if ($this->homeTeam->getOldId() == 1){
+                $this->scoreAwayFinal --;
+            }
+            else{
+                $this->scoreHomeFinal --;
+            }
+            
+        }
+        
     }
 }
