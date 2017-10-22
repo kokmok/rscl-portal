@@ -10,3 +10,18 @@
         {% endfor -%}
     </div>
 {%- endblock choice_widget_expanded -%}
+
+{%- block form_row -%}
+    <div>
+        {% if form.vars.checked is defined %}
+            {{- form_widget(form) -}}
+            {{- form_label(form) -}}
+            {{- form_errors(form) -}}
+        {% else %}
+            {{- form_label(form) -}}
+            {{- form_errors(form) -}}
+            {{- form_widget(form) -}}
+        {% endif %}
+
+    </div>
+{%- endblock form_row -%}
