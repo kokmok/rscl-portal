@@ -39,6 +39,12 @@ class Nationality
     private $iso;
 
 
+    
+    public function __toString()
+    {
+        return $this->name;
+    }
+
     /**
      * Get id
      *

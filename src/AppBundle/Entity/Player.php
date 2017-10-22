@@ -191,6 +191,10 @@ class Player
     {
         return $this->firstName.' '.$this->lastName;
     }
+    
+    public function getFullName(){
+        return $this->__toString();
+    }
 
     /**
      * Set number

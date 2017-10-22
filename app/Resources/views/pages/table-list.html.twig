@@ -1,0 +1,35 @@
+{% extends "/layout.html.twig" %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="//cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+{% endblock javascripts %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="//cdn.datatables.net/1.10.16/css/jquery.dataTables.min.css">
+    
+{% endblock stylesheets %}
+
+{% block main %}
+    <h1>{{ title }}</h1>
+    <table class="dataTabled">
+        <thead>
+        <tr>
+            {% for property in properties %}
+                <th>{{ property.name }}</th>
+            {% endfor %}
+            <th></th>
+        </tr>
+        </thead>
+        <tbody>
+        {% for entity in entities %}
+            <tr>
+                {% for property in properties %}
+                    <td>{{ entity|typedProperty(property) }}</td>
+                {% endfor %}
+                <td><a href="{{ path('entity_edit',{entityName: app.request.get('_route_params').entityName, entityId: entity.id}) }}" class="btn">Edit</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock main %}

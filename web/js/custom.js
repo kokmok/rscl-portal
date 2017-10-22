@@ -13,7 +13,15 @@ $(function(){
     //     closeOnSelect: false // Close upon selecting a date,
     // });
     $('.datepicker').bootstrapMaterialDatePicker({format: 'DD-MM-YYYY HH:mm'});
+    if ($('.dataTabled').length){
+        $('.dataTabled').dataTable();
 
+    }
+    $('.toastData').each(
+        function(){
+            Materialize.toast($(this).attr('data-toast-message'), 4000);
+        }
+    )
 })
 
 function matchLineSwitcherInit(){

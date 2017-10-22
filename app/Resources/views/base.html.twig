@@ -15,6 +15,14 @@
         {#<meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no"/>#}
     </head>
     <body>
+    {% for message in app.session.flashBag.get('toastSuccess')%}
+        <span class="toastData hide" data-toats-type="success" data-toast-message="{{ message }}"></span>
+    {% endfor %}
+    {% for message in app.session.flashBag.get('toastError')%}
+        <span class="toastData hide" data-toats-type="error" data-toast-message="{{ message }}"></span>
+    {% endfor %}
+    
+    
         {% block body %}
         {% endblock %}
         {% block javascripts %}

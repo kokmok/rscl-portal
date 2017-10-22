@@ -8,6 +8,8 @@
 namespace AppBundle\Twig;
 
 use AppBundle\Entity\MatchEvent;
+use AppBundle\Lister\TypedProperty;
+use Doctrine\DBAL\Types\Type;
 
 class TwigExtension extends \Twig_Extension
 {
@@ -16,7 +18,26 @@ class TwigExtension extends \Twig_Extension
     {
         return array(
             new \Twig_SimpleFilter('matchEventIcon', array($this, 'matchEventIcon')),
+            new \Twig_SimpleFilter('typedProperty', array($this, 'typedProperty')),
         );
+    }
+    
+    public function typedProperty($entity,TypedProperty $property){
+        if (method_exists($entity,'get'.ucfirst($property->getName()))){
+            $value = call_user_func([$entity,'get'.ucfirst($property->getName())]);
+            switch ($property->getType()){
+                case TypedProperty::TYPE_DATE:
+                    return $value->format('Y-m-d');
+                break;
+                case TypedProperty::TYPE_DATETIME:
+                    return $value->format('Y-m-d H:i:s');
+                break;
+                case TypedProperty::TYPE_NORMAL:
+                default:
+                    return $value;
+                    break;
+            }
+        }
     }
 
     public function matchEventIcon($matchEventType)

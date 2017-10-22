@@ -93,7 +93,7 @@ class MatchEventRepository extends \Doctrine\ORM\EntityRepository
             ->addSelect('player')
             ->addSelect('match')
             ->leftJoin('match.competition','competition')
-            ->andWhere('competition.oldId!=11')//On exclut les amicaux
+            ->andWhere('competition.oldId!=11')//On exclut les amicaux  
             ->addSelect('count(match_event.player) AS goals')
             ->addSelect('count(match_event.match) AS matchs')
             ->orderBy('goals','DESC')

@@ -18,6 +18,9 @@
 
         </ul>
         <ul id="dropdown3" class="dropdown-content">
+            <li><a href="{{ path('entity_list',{entityName: "match"}) }}">matchs</a></li>
+            <li><a href="{{ path('entity_list',{entityName: "player"}) }}">joueurs</a></li>
+            <li><a href="{{ path('entity_list',{entityName: "referee"}) }}">arbitres</a></li>
             <li><a href="{{ path('new_match') }}">Nouveau match</a></li>
             <li><a href="{{ path('fos_user_security_logout') }}">Se déconnecter</a></li>
             

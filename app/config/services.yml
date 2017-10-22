@@ -30,6 +30,11 @@ services:
         tags: ['controller.service_arguments']
 
     # add more services, or override services that need manual wiring
-    # AppBundle\Service\ExampleService:
-    #     arguments:
-    #         $someArgument: 'some_value'
+    app.entity_list_mapper:
+      class: AppBundle\Lister\EntityListMapper
+      arguments: ["%enties_list%","@doctrine.orm.entity_manager"]
+      public: true
+    app.toaster:
+      class: AppBundle\Toaster\FlashbagToast
+      arguments: ["@session"]
+      public: true

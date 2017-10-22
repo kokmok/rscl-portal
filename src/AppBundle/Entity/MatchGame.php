@@ -451,6 +451,9 @@ class MatchGame
         return $this->homeTeam;
     }
 
+    public function getTitle(){
+        return $this->homeTeam->__toString().' - '.$this->awayTeam->__toString();
+    }
     /**
      * Set awayTeam
      *
@@ -706,5 +709,9 @@ class MatchGame
             
         }
         
+    }
+    
+    public function getScore(){
+        return $this->scoreHomeFinal.' - '.$this->scoreAwayFinal;
     }
 }

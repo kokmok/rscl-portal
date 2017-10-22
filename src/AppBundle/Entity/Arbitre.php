@@ -37,7 +37,12 @@ class Arbitre
      * @ORM\Column(name="lastName", type="string", length=64,nullable=true)
      */
     private $lastName;
-    
+
+    /**
+     * @var boolean
+     * @ORM\Column(type="boolean")
+     */
+    private $active;
     
     
     
@@ -47,6 +52,10 @@ class Arbitre
     public function __toString()
     {
         return $this->firstName.' '.$this->lastName;
+    }
+    
+    public function getFullName(){
+        return $this->__toString();
     }
     
     /**
@@ -105,6 +114,23 @@ class Arbitre
     public function getLastName()
     {
         return $this->lastName;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isActive()
+    {
+        return $this->active;
+    }
+
+    /**
+     * @param bool $active
+     */
+    public function setActive(bool $active)
+    {
+        $this->active = $active;
+        return $this;
     }
 
     
