@@ -127,7 +127,7 @@ class Arbitre
     /**
      * @param bool $active
      */
-    public function setActive(bool $active)
+    public function setActive($active)
     {
         $this->active = $active;
         return $this;
