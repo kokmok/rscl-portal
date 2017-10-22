@@ -17,3 +17,21 @@ parameters:
 
     # A secret key that's used to generate certain security-related tokens
     secret: ThisTokenIsNotSoSecretChangeIt
+    enties_list:
+      match: 
+        class: AppBundle\Entity\MatchGame
+        form: AppBundle\Form\MatchGameType
+        propertyList:
+            - { name: title } 
+            - { name: date, type: TYPE_DATE } 
+            - { name: score }
+      player: 
+        class: AppBundle\Entity\Player
+        form: AppBundle\Form\PlayerType
+        propertyList:
+            - { name: fullName }
+      referee:
+        class: AppBundle\Entity\Arbitre
+        form: AppBundle\Form\ArbitreType
+        propertyList:
+            - { name: fullName }
