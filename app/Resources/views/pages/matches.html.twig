@@ -1,0 +1,113 @@
+{% extends "/layout.html.twig" %}
+
+{% block javascripts %}
+   
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.bundle.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.0/Chart.min.js"></script>
+    {{ parent() }}
+{% endblock javascripts %}
+{% block main %}
+    <div class="row">
+        <div id="leftCol" class="col s12 m12 l8">
+            <section >
+                <h1>Les matches du Standard</h1>
+                {{ form(form) }}
+                <div class="clearfix"></div>
+                <div>
+                        {#{{ matches|length }} matchs : {{ victories }} victoires, {{ defeats }} défaites, {{ draws }} nuls.#}
+                        {#<br>#}
+                        {#{{ scored }} buts marqués pour {{ encaisses }} buts encaissés#}
+                </div>
+                
+                {#</article>#}
+                {#<div class="row"></div>#}
+            </section>
+            {#{% endif %}#}
+
+        </div>
+        <div class="rightCol col s12 m12 l4">
+            <section>
+                <h1>Stats</h1>
+                <h2>Victoires</h2>
+                <canvas id="victories" data-victories="{{ victories }}" data-defeats="{{ defeats }}" data-draws="{{ draws }}"></canvas>
+                <h2>Buts</h2>
+                <canvas id="buts" data-scored="{{ scored }}" data-encaisses="{{ encaisses }}"></canvas>
+
+                <script>
+                   
+                    
+                </script>
+            </section>
+            
+            {#{% if classement|length %}#}
+            {#<section class="classement">#}
+            {#<h1>Classement {{ match.saison.name }}</h1>#}
+            {#<ul class="collection championnat">#}
+            {#<li class="collection-header"><div class="row"><div class="col s2"></div><div class="col s6">Equipe</div><div class="col s2">J.</div><div class="col s2">P.</div></div></li>#}
+            {#{% for row in classement %}#}
+            {#{{ dump(row) }}#}
+            {#<li class="collection-item{% if row.teamName == "Standard" or (row.team is not null and row.team.oldId ==1) %} red z-index-2{% endif %}"><div class="row"><div class="col s2">{{ loop.index }}</div><div class="col s6">{{ row.teamName }}</div><div class="col s2">{{ row.played }}</div><div class="col s2">{{ row.points }}</div></div></li>#}
+            {##}
+            {#{% endfor %}#}
+            {##}
+            {#<li class="collection-item red z-index-2"><div class="row"><div class="col s2">1</div><div class="col s6"><strong>Standard</strong></div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+            {#<li class="collection-item "><div class="row"><div class="col s2">1</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+            {#<li class="collection-item "><div class="row"><div class="col s2">2</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+            {#<li class="collection-item "><div class="row"><div class="col s2">3</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+            {#<li class="collection-item "><div class="row"><div class="col s2">4</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+            {#<li class="collection-item "><div class="row"><div class="col s2">5</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+            {#<li class="collection-item "><div class="row"><div class="col s2">6</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+            {#<li class="collection-item "><div class="row"><div class="col s2">7</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+            {#<li class="collection-item "><div class="row"><div class="col s2">8</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+            {#<li class="collection-item "><div class="row"><div class="col s2">9</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+            {#<li class="collection-item "><div class="row"><div class="col s2">10</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+            {#<li class="collection-item "><div class="row"><div class="col s2">11</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+            {#<li class="collection-item "><div class="row"><div class="col s2">12</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+            {#<li class="collection-item "><div class="row"><div class="col s2">13</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+            {#<li class="collection-item "><div class="row"><div class="col s2">14</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+            {#<li class="collection-item "><div class="row"><div class="col s2">15</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+            {#<li class="collection-item "><div class="row"><div class="col s2">16</div><div class="col s6">Equipe</div><div class="col s2">5</div><div class="col s2">15</div></div></li>#}
+            {##}
+            {#</ul>#}
+
+            {#</section>#}
+            {#{% endif %}#}
+            {#<section class="buteurs">#}
+                {#<h1>Buteurs</h1>#}
+
+                {#<h2>Championnat {{ match.saison.name }}</h2>#}
+                {#{% include 'elements/scorer-board.html.twig' with {events: bestScorerJup} %}#}
+                {#<h2>Toutes compétitions {{ match.saison.name }}</h2>#}
+                {#{% include 'elements/scorer-board.html.twig' with {events: bestScorer} %}#}
+                {#<h2>Depuis 1980</h2>#}
+                {#{% include 'elements/scorer-board.html.twig' with {events: bestScorersAllTime} %}#}
+            {#</section>#}
+        </div>
+    </div>
+    <div class="row">
+        <table>
+            <thead>
+            <tr>
+                <th>Match</th>
+                <th>Score</th>
+                <th>Saison</th>
+                <th>Arbitre</th>
+                <th>Coach</th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for match in matches %}
+                <tr>
+                    <td>{{ match.title }}</td>
+                    <td>{{ match.score }}</td>
+                    <td>{{ match.saison.name }}</td>
+                    <td>{{ match.arbitre }}</td>
+                    <td>{{ match.coach }}</td>
+                    <td><a href="{{ path('view_match',{id: match.id}) }}" class="btn">Voir la fiche</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+{% endblock main %}

@@ -714,4 +714,24 @@ class MatchGame
     public function getScore(){
         return $this->scoreHomeFinal.' - '.$this->scoreAwayFinal;
     }
+    
+    public function getStandardGoals(){
+        return $this->homeTeam->getOldId() === 1 ? $this->scoreHomeFinal : $this->scoreAwayFinal; 
+    }
+    
+    public function getEnemyGoals(){
+        return $this->homeTeam->getOldId() === 1 ? $this->scoreAwayFinal : $this->scoreHomeFinal; 
+    }
+    
+    public function isVictory(){
+        return $this->getStandardGoals() > $this->getEnemyGoals();
+    }
+    
+    public function isDefeat(){
+        return $this->getStandardGoals() < $this->getEnemyGoals();
+    }
+    
+    public function isDraw(){
+        return $this->getStandardGoals() == $this->getEnemyGoals();
+    }
 }

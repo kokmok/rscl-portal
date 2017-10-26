@@ -10,3 +10,5 @@ a,.card .card-action a:not(.btn):not(.btn-large):not(.btn-large):not(.btn-floati
   background-color: $primary;
   .footer-copyright {background: none;}
 }
+
+.dropdown-content li>a, .dropdown-content li>span {color:$mainTextColor !important;}

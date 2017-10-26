@@ -2,6 +2,7 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Search\SearchMatchModel;
 use Doctrine\DBAL\Types\DateTimeType;
 
 /**
@@ -39,5 +40,38 @@ class MatchGameRepository extends \Doctrine\ORM\EntityRepository
 
         return $qb->getQuery()->getOneOrNullResult();
 
+    }
+    
+    public function findBySearch(SearchMatchModel $search){
+        $qb = $this->createQueryBuilder('match_game');
+        
+        $andWhere = $qb->expr()->andX();
+        if ($search->getSaison() !== null){
+            $andWhere->add('match_game.saison=:saison');
+            $qb->setParameter('saison',$search->getSaison())
+                ;
+        }   
+        
+        if ($search->getPlayer() !== null){
+            $qb->leftJoin('match_game.players','players');
+            $andWhere->add($qb->expr()->in('players.id',[$search->getPlayer()->getId()]));
+//            $qb->setParameter('player',$search->getPlayer());
+        }
+        if ($search->getReferee() !== null){
+            $andWhere->add('match_game.arbitre=:referee');
+            $qb->setParameter('referee',$search->getReferee());
+        }if ($search->getCoach() !== null){
+            $andWhere->add('match_game.coach=:coach');
+            $qb->setParameter('coach',$search->getCoach());
+        }
+        if ($andWhere->count()){
+            $qb->where($andWhere);
+        }
+        $qb->leftJoin('match_game.saison','saison');
+        $qb->orderBy('saison.name');
+        
+        
+        return $qb->getQuery()->getResult();
+        
     }
 }

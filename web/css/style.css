@@ -16,6 +16,9 @@ a, .card .card-action a:not(.btn):not(.btn-large):not(.btn-large):not(.btn-float
   .page-footer .footer-copyright {
     background: none; }
 
+.dropdown-content li > a, .dropdown-content li > span {
+  color: #222 !important; }
+
 .timelineBlock {
   height: 40px;
   position: relative;
