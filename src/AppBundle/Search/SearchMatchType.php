@@ -40,7 +40,9 @@ class SearchMatchType extends AbstractType
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'AppBundle\Search\SearchMatchModel'
+            'data_class' => 'AppBundle\Search\SearchMatchModel',
+            'method'=>'GET',
+            'csrf_protection'=>false
         ));
     }
 
@@ -49,7 +51,7 @@ class SearchMatchType extends AbstractType
      */
     public function getBlockPrefix()
     {
-        return 'appbundle_searchmatch';
+        return '';
     }
 
 

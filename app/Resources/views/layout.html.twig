@@ -4,17 +4,17 @@
     {% block topNav %}
         <div class="navbar-fixed">
         <ul id="dropdown1" class="dropdown-content">
-            <li><a href="#!">Joueurs</a></li>
-            <li><a href="#!">Matchs</a></li>
-            <li><a href="#!">Classements</a></li>
-            <li><a href="#!">Buteurs</a></li>
+            {#<li><a href="#!">Joueurs</a></li>#}
+            <li><a href="{{ path('app_default_matches') }}">Matchs</a></li>
+            {#<li><a href="#!">Classements</a></li>#}
+            {#<li><a href="#!">Buteurs</a></li>#}
 
         </ul>
         <ul id="dropdown2" class="dropdown-content">
-            <li><a href="#!">Classements</a></li>
-            <li><a href="#!">Matchs</a></li>
-            <li><a href="#!">Buteurs</a></li>
-            <li><a href="#!">Noyau</a></li>
+            {#<li><a href="#!">Classements</a></li>#}
+            <li><a href="{{ path('app_default_matches') }}">Matchs</a></li>
+            {#<li><a href="#!">Buteurs</a></li>#}
+            {#<li><a href="#!">Noyau</a></li>#}
 
         </ul>
         <ul id="dropdown3" class="dropdown-content">
