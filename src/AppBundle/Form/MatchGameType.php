@@ -8,7 +8,10 @@ use AppBundle\Entity\Competition;
 use AppBundle\Entity\Player;
 use AppBundle\Entity\Saison;
 use AppBundle\Entity\Team;
+use AppBundle\Repository\ArbitreRepository;
+use AppBundle\Repository\CoachRepository;
 use AppBundle\Repository\PlayerRepository;
+use AppBundle\Repository\SaisonRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateTimeType;
@@ -30,11 +33,26 @@ class MatchGameType extends AbstractType
             ->add('date',DateTimeType::class,['attr'=>['class'=>'datepicker'],'widget' => 'single_text','format'=>'dd-MM-yyyy HH:mm'])
             ->add('description')
             ->add('competition',EntityType::class,['class'=>Competition::class])
-            ->add('arbitre',EntityType::class,['class'=>Arbitre::class])
-            ->add('saison',EntityType::class,['class'=>Saison::class])
+            ->add('arbitre',EntityType::class, [
+                'class' => Arbitre::class,
+                'query_builder' => function(ArbitreRepository $ar) {
+                    return $ar->getActiveFirstQueryBuilder();
+                }
+            ])
+            ->add('saison',EntityType::class, [
+                'class' => Saison::class,
+                'query_builder' => function (SaisonRepository $sr) {
+                return $sr->getActiveFirstQueryBuilder();
+                }
+            ])
             ->add('homeTeam',EntityType::class,['class'=>Team::class])
             ->add('awayTeam',EntityType::class,['class'=>Team::class])
-            ->add('coach',EntityType::class,['class'=>Coach::class]);
+            ->add('coach',EntityType::class, [
+                'class' => Coach::class,
+                'query_builder' => function(CoachRepository $cr) {
+                    return $cr->getActiveFirstQueryBuilder();
+                }
+            ]);
             if ($builder->getData()->getId()){
                 $builder->add('players',EntityType::class,['class'=>Player::class,'multiple'=>true,'expanded'=>true,'query_builder'=>
                     function (PlayerRepository $repo) use ($builder){

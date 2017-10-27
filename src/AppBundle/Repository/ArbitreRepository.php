@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Repository;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * ArbitreRepository
@@ -10,4 +11,13 @@ namespace AppBundle\Repository;
  */
 class ArbitreRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * @return QueryBuilder
+     */
+    function getActiveFirstQueryBuilder() {
+        return $this->createQueryBuilder('arbitre')
+        ->orderBy('arbitre.active', 'DESC')
+        ->addOrderBy('arbitre.lastName')
+        ->addOrderBy('arbitre.firstName');
+    }
 }
