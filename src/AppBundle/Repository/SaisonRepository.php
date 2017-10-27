@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Repository;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * SaisonRepository
@@ -10,4 +11,12 @@ namespace AppBundle\Repository;
  */
 class SaisonRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * @return QueryBuilder
+     */
+    function getActiveFirstQueryBuilder() {
+        return $this->createQueryBuilder('season')
+            ->orderBy('season.running', 'DESC')
+            ->addOrderBy('season.name', 'DESC');
+    }
 }
