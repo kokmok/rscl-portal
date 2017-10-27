@@ -1,6 +1,7 @@
 <?php
 
 namespace AppBundle\Repository;
+use Doctrine\ORM\QueryBuilder;
 
 /**
  * CoachRepository
@@ -10,4 +11,11 @@ namespace AppBundle\Repository;
  */
 class CoachRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * @return QueryBuilder
+     */
+    function getActiveFirstQueryBuilder() {
+        return $this->createQueryBuilder('coach')
+            ->orderBy('coach.id', 'DESC');
+    }
 }
