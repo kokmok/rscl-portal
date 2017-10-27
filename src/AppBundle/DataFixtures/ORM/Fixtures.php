@@ -28,7 +28,7 @@ class Fixtures extends Fixture
     public function load(ObjectManager $manager)
     {   
 //        return;
-        $pdo = new \PDO('mysql:dbname=rscl;host=localhost','root','root');
+        $pdo = new \PDO('mysql:dbname=rscl;host=localhost','rscl','Vos6omAsaick}');
 
 //        $sth = $pdo->prepare('SELECT * FROM `archive_nationalite`');
 //        $sth->execute();
