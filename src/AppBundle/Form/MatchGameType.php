@@ -8,6 +8,7 @@ use AppBundle\Entity\Competition;
 use AppBundle\Entity\Player;
 use AppBundle\Entity\Saison;
 use AppBundle\Entity\Team;
+use AppBundle\Repository\ArbitreRepository;
 use AppBundle\Repository\PlayerRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -30,7 +31,12 @@ class MatchGameType extends AbstractType
             ->add('date',DateTimeType::class,['attr'=>['class'=>'datepicker'],'widget' => 'single_text','format'=>'dd-MM-yyyy HH:mm'])
             ->add('description')
             ->add('competition',EntityType::class,['class'=>Competition::class])
-            ->add('arbitre',EntityType::class,['class'=>Arbitre::class])
+            ->add('arbitre',EntityType::class, [
+                'class' => Arbitre::class,
+                'query_builder' => function(ArbitreRepository $ar) {
+                    return $ar->getActiveFirstQueryBuilder();
+                }
+            ])
             ->add('saison',EntityType::class,['class'=>Saison::class])
             ->add('homeTeam',EntityType::class,['class'=>Team::class])
             ->add('awayTeam',EntityType::class,['class'=>Team::class])
