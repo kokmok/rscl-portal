@@ -25,10 +25,10 @@ class AdminController extends Controller
     public function newMatchAction(Request $request)
     {
         $em = $this->get('doctrine.orm.default_entity_manager');
-        $teamCompetitionRepository = $em->getRepository(TeamCompetition::class);
+        $teamCompetitionRepository = $em->getRepository(Team::class);
         $match = new MatchGame();
         $form = $this->createForm(MatchGameType::class, $match, [
-            'preferred_teams' => $teamCompetitionRepository->getProLeagueATeams()
+            'preferred_teams' => $teamCompetitionRepository->getProLeagueATeamsForFormType()
         ]);
 
         if ($form->handleRequest($request)->isValid()) {

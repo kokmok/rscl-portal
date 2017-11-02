@@ -29,6 +29,13 @@ class Team
      * @ORM\Column(name="name", type="string", length=64)
      */
     private $name;
+
+    /**
+     * @var TeamCompetition
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\TeamCompetition",mappedBy="team")
+     */
+    private $competitionsParticipations;
+    
     public function __toString()
     {
         return $this->name;
@@ -68,6 +75,49 @@ class Team
     {
         return $this->name;
     }
+    
+    
 
     
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->competitionsParticipations = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add competitionsParticipation
+     *
+     * @param \AppBundle\Entity\TeamCompetition $competitionsParticipation
+     *
+     * @return Team
+     */
+    public function addCompetitionsParticipation(\AppBundle\Entity\TeamCompetition $competitionsParticipation)
+    {
+        $this->competitionsParticipations[] = $competitionsParticipation;
+
+        return $this;
+    }
+
+    /**
+     * Remove competitionsParticipation
+     *
+     * @param \AppBundle\Entity\TeamCompetition $competitionsParticipation
+     */
+    public function removeCompetitionsParticipation(\AppBundle\Entity\TeamCompetition $competitionsParticipation)
+    {
+        $this->competitionsParticipations->removeElement($competitionsParticipation);
+    }
+
+    /**
+     * Get competitionsParticipations
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getCompetitionsParticipations()
+    {
+        return $this->competitionsParticipations;
+    }
 }

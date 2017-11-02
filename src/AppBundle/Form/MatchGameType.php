@@ -31,6 +31,7 @@ class MatchGameType extends AbstractType
      */
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+        
         $builder
             ->add('name')
             ->add('date',DateTimeType::class,['attr'=>['class'=>'datepicker'],'widget' => 'single_text','format'=>'dd-MM-yyyy HH:mm'])
@@ -50,11 +51,15 @@ class MatchGameType extends AbstractType
             ])
             ->add('homeTeam',EntityType::class, [
                 'class' => Team::class,
-                'preferred_choices' => $options['preferred_teams'],
+                'preferred_choices' => function($val,$key) use ($options){
+                    return in_array($val->getId(),$options['preferred_teams']);
+                }
             ])
             ->add('awayTeam',EntityType::class, [
                 'class' => Team::class,
-                'preferred_choices' => $options['preferred_teams'],
+                'preferred_choices' => function($val,$key) use ($options){
+                    return in_array($val->getId(),$options['preferred_teams']);
+                }
             ])
             ->add('coach',EntityType::class, [
                 'class' => Coach::class,

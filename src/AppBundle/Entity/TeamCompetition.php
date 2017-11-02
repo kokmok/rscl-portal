@@ -29,7 +29,7 @@ class TeamCompetition
     private $name;
 
     /**
-     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Team")
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Team",inversedBy="competitionsParticipations")
      * @ORM\JoinColumn(nullable=false)
      */
     private $team;
