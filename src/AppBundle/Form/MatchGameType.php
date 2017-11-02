@@ -51,15 +51,11 @@ class MatchGameType extends AbstractType
             ])
             ->add('homeTeam',EntityType::class, [
                 'class' => Team::class,
-                'preferred_choices' => function($val,$key) use ($options){
-                    return in_array($val->getId(),$options['preferred_teams']);
-                }
+                'preferred_choices' => $options['preferred_teams'],
             ])
             ->add('awayTeam',EntityType::class, [
                 'class' => Team::class,
-                'preferred_choices' => function($val,$key) use ($options){
-                    return in_array($val->getId(),$options['preferred_teams']);
-                }
+                'preferred_choices' => $options['preferred_teams'],
             ])
             ->add('coach',EntityType::class, [
                 'class' => Coach::class,

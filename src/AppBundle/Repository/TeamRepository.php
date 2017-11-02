@@ -44,8 +44,4 @@ class TeamRepository extends \Doctrine\ORM\EntityRepository
             ->getResult();
     }
 
-    public function getProLeagueATeamsForFormType(){
-        return array_map(function(Team $team){return $team->getId();},$this->getProLeagueATeams());
-        
-    }
 }

@@ -28,7 +28,7 @@ class AdminController extends Controller
         $teamCompetitionRepository = $em->getRepository(Team::class);
         $match = new MatchGame();
         $form = $this->createForm(MatchGameType::class, $match, [
-            'preferred_teams' => $teamCompetitionRepository->getProLeagueATeamsForFormType()
+            'preferred_teams' => $teamCompetitionRepository->getProLeagueATeams()
         ]);
 
         if ($form->handleRequest($request)->isValid()) {
