@@ -2,6 +2,8 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Team;
+
 /**
  * TeamRepository
  *
@@ -10,4 +12,16 @@ namespace AppBundle\Repository;
  */
 class TeamRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * @param string $name
+     * @return null|Team
+     */
+    public function findOneByName($name)
+    {
+        return $this->createQueryBuilder('team')
+            ->where('team.name LIKE :name')
+            ->setParameter('name', $name)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
 }

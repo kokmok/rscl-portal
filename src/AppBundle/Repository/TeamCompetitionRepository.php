@@ -10,4 +10,21 @@ namespace AppBundle\Repository;
  */
 class TeamCompetitionRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * @return string[]
+     */
+    public function getProLeagueATeams()
+    {
+        $proLeagueA = $this->getEntityManager()->getRepository('AppBundle:Competition')->getProLeagueA();
+        $activeSeason = $this->getEntityManager()->getRepository('AppBundle:Saison')->getActiveSeason();
+
+        return $this->createQueryBuilder('team_competition')
+            ->select('team_competition.name')
+            ->where('team_competition.competition = :competition')
+            ->andWhere('team_competition.season = :season')
+            ->setParameter('competition', $proLeagueA)
+            ->setParameter('season', $activeSeason)
+            ->getQuery()
+            ->getResult();
+    }
 }

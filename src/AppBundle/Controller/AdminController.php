@@ -5,9 +5,12 @@ namespace AppBundle\Controller;
 use AppBundle\Entity\MatchEvent;
 use AppBundle\Entity\MatchGame;
 use AppBundle\Entity\Player;
+use AppBundle\Entity\Team;
+use AppBundle\Entity\TeamCompetition;
 use AppBundle\Form\MatchEventType;
 use AppBundle\Form\MatchGameType;
 use AppBundle\Form\PlayerType;
+use Doctrine\ORM\EntityManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -21,12 +24,17 @@ class AdminController extends Controller
      */
     public function newMatchAction(Request $request)
     {
+        $em = $this->get('doctrine.orm.default_entity_manager');
+        $teamCompetitionRepository = $em->getRepository(TeamCompetition::class);
         $match = new MatchGame();
-        $form = $this->createForm(MatchGameType::class,$match);
-        if ($form->handleRequest($request)->isValid()){
-            $em = $this->get('doctrine.orm.default_entity_manager');
+        $form = $this->createForm(MatchGameType::class, $match, [
+            'preferred_teams' => $teamCompetitionRepository->getProLeagueATeams()
+        ]);
+
+        if ($form->handleRequest($request)->isValid()) {
             $em->persist($match);
             $em->flush();
+
             return $this->redirectToRoute('homepage');
         }
         
