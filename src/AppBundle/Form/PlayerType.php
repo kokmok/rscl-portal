@@ -21,6 +21,7 @@ class PlayerType extends AbstractType
         $builder
             ->add('firstName')
             ->add('lastName')
+            ->add('nickName')
             ->add('number')
 //            ->add('active')
 //            ->add('birthDate')

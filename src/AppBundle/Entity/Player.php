@@ -47,6 +47,13 @@ class Player
     private $lastName;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="nickName", type="string", length=255)
+     */
+    private $nickName;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="number", type="integer")
@@ -189,7 +196,7 @@ class Player
     
     public function __toString()
     {
-        return $this->firstName.' '.$this->lastName;
+        return $this->nickName ?: $this->firstName.' '.$this->lastName;
     }
     
     public function getFullName(){
@@ -431,7 +438,7 @@ class Player
         return $this->seasons;
     }
 
-   
+
 
     /**
      * Set type
@@ -503,5 +510,21 @@ class Player
     public function getTeamName()
     {
         return $this->teamName;
+    }
+
+    /**
+     * @param string $nickName
+     */
+    public function setNickName($nickName)
+    {
+        $this->nickName = $nickName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNickName()
+    {
+        return $this->nickName;
     }
 }
