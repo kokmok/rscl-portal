@@ -38,11 +38,11 @@ class AdminListController extends Controller
             $em->persist($entity);
             $em->flush();
             
-            $this->get('app.toaster')->addSuccess('Edtition réussie');
+            $this->get('app.toaster')->addSuccess('Edition réussie');
             return $this->redirectToRoute('entity_list',['entityName'=>$entityName]);
         }
         else if ($form->isSubmitted()){
-            $this->get('app.toaster')->addSuccess('Edtition réussie');
+            $this->get('app.toaster')->addSuccess('Edition réussie');
         }
         
         return $this->render('pages/simple-form.html.twig',['form'=>$form->createView(),'title'=>'Edit '.$entityName]);
