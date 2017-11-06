@@ -65,6 +65,7 @@ class CleanupDoubleEntriesInPlayersCommand extends ContainerAwareCommand
             2430, 2431, 2432, 2433, 2435, 2436, 2437, 2438, 2439,
             2440, 2441, 2448, 2449,
             2454,
+            2550, 2553,
             2588, 2589, 2590,
         ];
 
