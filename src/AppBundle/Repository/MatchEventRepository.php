@@ -3,6 +3,7 @@
 namespace AppBundle\Repository;
 
 use AppBundle\Entity\MatchEvent;
+use AppBundle\Entity\Player;
 use AppBundle\Entity\Saison;
 
 /**
@@ -13,117 +14,131 @@ use AppBundle\Entity\Saison;
  */
 class MatchEventRepository extends \Doctrine\ORM\EntityRepository
 {
-    public function findBestScorersEvent(){
+    public function findBestScorersEvent()
+    {
         $qb = $this->createQueryBuilder('match_event');
-        
-        $qb->leftJoin('match_event.match','match')
-            ->leftJoin('match_event.player','player')
-            ->leftJoin('match.saison','saison')
+
+        $qb->leftJoin('match_event.match', 'match')
+            ->leftJoin('match_event.player', 'player')
+            ->leftJoin('match.saison', 'saison')
             ->where('saison.running=true')
             ->andWhere('match_event.type=:eventType')
-            ->setParameter('eventType',MatchEvent::TYPE_GOAL)
+            ->setParameter('eventType', MatchEvent::TYPE_GOAL)
             ->groupBy('match_event.player')
             ->addSelect('player')
             ->addSelect('match')
-            ->leftJoin('match.competition','competition')
+            ->leftJoin('match.competition', 'competition')
             ->andWhere('competition.oldId!=11')//On exclut les amicaux
             ->addSelect('count(match_event.player) AS goals')
             ->addSelect('count(match_event.match) AS matchs')
-            ->orderBy('goals','DESC')
-        ;
-        
+            ->orderBy('goals', 'DESC');
+
         return $qb->getQuery()->getResult();
-        
+
     }
-    public function findBestScorersEventBySaison(Saison $saison){
+
+    public function findBestScorersEventBySaison(Saison $saison)
+    {
         $qb = $this->createQueryBuilder('match_event');
-        
-        $qb->leftJoin('match_event.match','match')
-            ->leftJoin('match_event.player','player')
-            ->leftJoin('match.saison','saison')
+
+        $qb->leftJoin('match_event.match', 'match')
+            ->leftJoin('match_event.player', 'player')
+            ->leftJoin('match.saison', 'saison')
             ->where('match.saison=:saison')
-            ->setParameter('saison',$saison)
+            ->setParameter('saison', $saison)
             ->andWhere('match_event.type=:eventType')
-            ->setParameter('eventType',MatchEvent::TYPE_GOAL)
+            ->setParameter('eventType', MatchEvent::TYPE_GOAL)
             ->groupBy('match_event.player')
             ->addSelect('player')
             ->addSelect('match')
-            ->leftJoin('match.competition','competition')
+            ->leftJoin('match.competition', 'competition')
             ->andWhere('competition.oldId!=11')//On exclut les amicaux
             ->addSelect('count(match_event.player) AS goals')
             ->addSelect('count(match_event.match) AS matchs')
-            ->orderBy('goals','DESC')
-        ;
-        
+            ->orderBy('goals', 'DESC');
+
         return $qb->getQuery()->getResult();
-        
-    }public function findBestScorersEventJupilerBySaison(Saison $saison){
+
+    }
+
+    public function findBestScorersEventJupilerBySaison(Saison $saison)
+    {
         $qb = $this->createQueryBuilder('match_event');
-        
-        $qb->leftJoin('match_event.match','match')
-            ->leftJoin('match_event.player','player')
-            ->leftJoin('match.saison','saison')
+
+        $qb->leftJoin('match_event.match', 'match')
+            ->leftJoin('match_event.player', 'player')
+            ->leftJoin('match.saison', 'saison')
             ->where('match.saison=:saison')
-            ->setParameter('saison',$saison)
+            ->setParameter('saison', $saison)
             ->andWhere('match_event.type=:eventType')
-            ->setParameter('eventType',MatchEvent::TYPE_GOAL)
+            ->setParameter('eventType', MatchEvent::TYPE_GOAL)
             ->groupBy('match_event.player')
             ->addSelect('player')
             ->addSelect('match')
-            ->leftJoin('match.competition','competition')
+            ->leftJoin('match.competition', 'competition')
             ->andWhere('competition.oldId=1')
             ->addSelect('count(match_event.player) AS goals')
             ->addSelect('count(match_event.match) AS matchs')
-            ->orderBy('goals','DESC')
-        ;
-        
+            ->orderBy('goals', 'DESC');
+
         return $qb->getQuery()->getResult();
-        
+
     }
-    public function findBestScorersEventAllTime($limit = 30){
+
+    public function findBestScorersEventAllTime($limit = 30)
+    {
         $qb = $this->createQueryBuilder('match_event');
-        
-        $qb->leftJoin('match_event.match','match')
-            ->leftJoin('match_event.player','player')
-            ->leftJoin('match.saison','saison')
+
+        $qb->leftJoin('match_event.match', 'match')
+            ->leftJoin('match_event.player', 'player')
+            ->leftJoin('match.saison', 'saison')
 //            ->where('saison.running=true')
             ->andWhere('match_event.type=:eventType')
-            ->setParameter('eventType',MatchEvent::TYPE_GOAL)
+            ->setParameter('eventType', MatchEvent::TYPE_GOAL)
             ->groupBy('match_event.player')
             ->addSelect('player')
             ->addSelect('match')
-            ->leftJoin('match.competition','competition')
+            ->leftJoin('match.competition', 'competition')
             ->andWhere('competition.oldId!=11')//On exclut les amicaux  
             ->addSelect('count(match_event.player) AS goals')
             ->addSelect('count(match_event.match) AS matchs')
-            ->orderBy('goals','DESC')
-            ->setMaxResults($limit)
-        ;
-        
+            ->orderBy('goals', 'DESC')
+            ->setMaxResults($limit);
+
         return $qb->getQuery()->getResult();
-        
+
     }
-    
-    public function findBestScorersEventJupiler(){
+
+    public function findBestScorersEventJupiler()
+    {
         $qb = $this->createQueryBuilder('match_event');
-        
-        $qb->leftJoin('match_event.match','match')
-            ->leftJoin('match_event.player','player')
-            ->leftJoin('match.saison','saison')
+
+        $qb->leftJoin('match_event.match', 'match')
+            ->leftJoin('match_event.player', 'player')
+            ->leftJoin('match.saison', 'saison')
             ->where('saison.running=true')
             ->andWhere('match_event.type=:eventType')
-            ->setParameter('eventType',MatchEvent::TYPE_GOAL)
+            ->setParameter('eventType', MatchEvent::TYPE_GOAL)
             ->groupBy('match_event.player')
             ->addSelect('player')
             ->addSelect('match')
-            ->leftJoin('match.competition','competition')
+            ->leftJoin('match.competition', 'competition')
             ->andWhere('competition.oldId=1')
             ->addSelect('count(match_event.player) AS goals')
             ->addSelect('count(match_event.match) AS matchs')
-            ->orderBy('goals','DESC')
-        ;
-        
+            ->orderBy('goals', 'DESC');
+
         return $qb->getQuery()->getResult();
-        
+
+    }
+
+    public function findByPlayer(Player $player)
+    {
+        $qb = $this->createQueryBuilder('match_event');
+
+        $qb->where('match_event.player = :player')
+            ->setParameter('player', $player);
+
+        return $qb->getQuery()->getResult();
     }
 }
