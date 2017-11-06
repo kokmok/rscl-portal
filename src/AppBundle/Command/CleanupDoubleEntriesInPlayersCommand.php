@@ -55,7 +55,7 @@ class CleanupDoubleEntriesInPlayersCommand extends ContainerAwareCommand
 
             if ($player) {
                 $output->writeln("Deleting player {$id} ({$player->getFullName()})");
-                $em->detach($player);
+                $em->remove($player);
             } else {
                 $output->writeln("Player Id not found in database: {$id}");
             }
@@ -73,10 +73,10 @@ class CleanupDoubleEntriesInPlayersCommand extends ContainerAwareCommand
         $player->setContract($oldPlayer->getContract());
         $player->setPosition($oldPlayer->getPosition());
         $player->setTeamName($oldPlayer->getTeamName());
-        $output->writeln("Deleting player {$player->getId()} ({$player->getFullName()})");
+        $output->writeln("Updating player {$player->getId()} ({$player->getFullName()})");
         $em->persist($player);
         $output->writeln("Deleting player {$oldPlayer->getId()} ({$oldPlayer->getFullName()})");
-        $em->detach($oldPlayer);
+        $em->remove($oldPlayer);
 
         $em->flush();
         $output->writeln("Saved.");
