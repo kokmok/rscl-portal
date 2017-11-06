@@ -132,8 +132,12 @@ class Player
      * @ORM\Column(type="string",length=255)
      */
     private $teamName;
-    
-    
+
+    /**
+     * @var Roster
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Roster")
+     */
+    private $roster;
 
 
     /**
@@ -510,6 +514,30 @@ class Player
     public function getTeamName()
     {
         return $this->teamName;
+    }
+
+    /**
+     * Set roster
+     *
+     * @param Roster $roster
+     *
+     * @return Player
+     */
+    public function setRoster(Roster $roster = null)
+    {
+        $this->roster = $roster;
+
+        return $this;
+    }
+
+    /**
+     * Get roster
+     *
+     * @return Roster
+     */
+    public function getRoster()
+    {
+        return $this->roster;
     }
 
     /**
