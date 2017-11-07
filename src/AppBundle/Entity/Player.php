@@ -139,6 +139,11 @@ class Player
      */
     private $roster;
 
+    /**
+     * @var boolean
+     * @ORM\Column(name="on_loan", type="boolean")
+     */
+    private $onLoan;
 
     /**
      * Get id
@@ -554,5 +559,24 @@ class Player
     public function getNickName()
     {
         return $this->nickName;
+    }
+
+    /**
+     * @param boolean $onLoan
+     * @return Player
+     */
+    public function setOnLoan($onLoan)
+    {
+        $this->onLoan = $onLoan;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isOnLoan()
+    {
+        return $this->onLoan ? true : false;
     }
 }
