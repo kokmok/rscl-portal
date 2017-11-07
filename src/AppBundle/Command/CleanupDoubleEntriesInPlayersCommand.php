@@ -13,6 +13,7 @@ use AppBundle\Repository\TeamRepository;
 use AppBundle\Search\SearchMatchModel;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Logger\ConsoleLogger;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -26,6 +27,7 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class CleanupDoubleEntriesInPlayersCommand extends ContainerAwareCommand
 {
+    const ARGUMENT_FLUSHABLE = 'FLUSHABLE';
     /**
      * {@inheritdoc}
      */
@@ -33,6 +35,7 @@ class CleanupDoubleEntriesInPlayersCommand extends ContainerAwareCommand
     {
         $this
             ->setName('app:cleanup-players')
+            ->addOption(self::ARGUMENT_FLUSHABLE, 'f', InputOption::VALUE_NONE)
             ->setDescription("Supprime les doublons dans la table des joueurs")
         ;
     }
@@ -42,6 +45,7 @@ class CleanupDoubleEntriesInPlayersCommand extends ContainerAwareCommand
      */
     protected function execute(InputInterface $input, OutputInterface $output)
     {
+        $flushable   = true === $input->getOption(self::ARGUMENT_FLUSHABLE);
         $em = $this->getContainer()->get('doctrine.orm.default_entity_manager');
         /**
          * @var PlayerRepository $playerRepository
@@ -61,16 +65,11 @@ class CleanupDoubleEntriesInPlayersCommand extends ContainerAwareCommand
         $playerVoteRepository = $em->getRepository('AppBundle:PlayerVote');
 
         $toDelete = [
-            2425, 2426, 2427, 2428, 2429,
-            2430, 2431, 2432, 2433, 2435, 2436, 2437, 2438, 2439,
-            2440, 2441, 2448, 2449,
-            2454,
-            2550, 2553,
-            2588, 2589, 2590,
+            177,178,179,180,181,182,183,184,185,187,188,189,190,191,192,193,200,201,206,301,304,340,341,342
         ];
 
         foreach ($toDelete as $id) {
-            $player = $playerRepository->find($id);
+            $player = $playerRepository->findOneByOldId($id);
 
             if ($player) {
                 $output->writeln("Deleting player {$id} ({$player->getFullName()})");
@@ -79,80 +78,123 @@ class CleanupDoubleEntriesInPlayersCommand extends ContainerAwareCommand
                 $output->writeln("Player Id not found in database: {$id}");
             }
         }
-        $em->flush();
+        if ($flushable){
+            $em->flush();
+            $output->writeln('Flush removed players');
+        }
 
         // Tikva/Tykva merge (no potala involved)
         /**
          * @var Player $player
          */
-        $player = $playerRepository->find(2583);
-        $oldPlayer = $playerRepository->find(2508);
+        $player = $playerRepository->findOneByOldId(259);
+        $oldPlayer = $playerRepository->findOneByOldId(334);
+        
+        if ($oldPlayer) {
 
-        $output->writeln("Merging Tikva and Tykva");
 
-        $output->writeln("Merging seasons...");
-        foreach($oldPlayer->getSeasons() as $season) {
-            $oldPlayer->removeSeason($season);
+            $output->writeln("Merging Tikva and Tykva");
+
+            $output->writeln("Merging seasons...");
+            foreach ($oldPlayer->getSeasons() as $season) {
+                $oldPlayer->removeSeason($season);
+            }
+            if ($flushable) {
+                $em->persist($oldPlayer);
+                $em->flush();
+                $output->writeln('Flush merging seasons');
+            }
+
+
+            $output->writeln("Merging match events...");
+            $matchEvents = $matchEventRepository->findByPlayer($oldPlayer);
+            foreach ($matchEvents as $matchEvent) {
+                /**
+                 * @var MatchEvent $matchEvent
+                 */
+                $output->writeln("Match Event {$matchEvent->getId()}");
+                $matchEvent->setPlayer($player);
+                $em->persist($matchEvent);
+            }
+            if ($flushable) {
+
+                $em->flush();
+                $output->writeln('Flush merging match events');
+            }
+
+            $output->writeln("Merging match games...");
+            $matchGames = $matchGameRepository->findBySearch((new SearchMatchModel)->setPlayer($oldPlayer));
+            foreach ($matchGames as $matchGame) {
+                /**
+                 * @var MatchGame $matchGame
+                 * @var Player $oldPlayer
+                 */
+                $matchGame->addPlayer($player);
+                $matchGame->removePlayer($oldPlayer);
+                $em->persist($matchGame);
+            }
+            if ($flushable) {
+                $em->flush();
+                $em->flush();
+                $output->writeln('Flush merging match games');
+            }
+
+
+            $playerVotes = $playerVoteRepository->findByPlayer($oldPlayer);
+            foreach ($playerVotes as $playerVote) {
+                /**
+                 * @var PlayerVote $playerVote
+                 */
+                $playerVote->setPlayer($player);
+                $em->persist($playerVote);
+            }
+
+            $output->writeln("Updating {$player->getId()} ({$player->getFullName()})");
+            $player->setLastName('Tikva');
+            $em->persist($player);
+
+
+            $output->writeln("Deleting {$oldPlayer->getId()} ({$oldPlayer->getFullName()})");
+            $em->remove($oldPlayer);
+
+            if ($flushable) {
+
+                $em->flush();
+                $output->writeln('Flush deleting doublon');
+            }
         }
-        $em->persist($oldPlayer);
-        $em->flush();
 
-        $output->writeln("Merging match events...");
-        $matchEvents = $matchEventRepository->findByPlayer($oldPlayer);
-        foreach($matchEvents as $matchEvent) {
-            /**
-             * @var MatchEvent $matchEvent
-             */
-            $output->writeln("Match Event {$matchEvent->getId()}");
+        // Fai
+        $oldPlayer = $playerRepository->findOneByOldId(416);
+        $player = $playerRepository->findOneByOldId(425);
+        $player->setContract($oldPlayer->getContract());
+        $player->setPosition($oldPlayer->getPosition());
+        $player->setTeamName($oldPlayer->getTeamName());
+        $matchEvents = $matchEventRepository->findBy(['player'=>$oldPlayer]);
+        foreach ($matchEvents as $matchEvent){
             $matchEvent->setPlayer($player);
-            $em->persist($matchEvent);
         }
-        $em->flush();
-
-        $output->writeln("Merging match games...");
-        $matchGames = $matchGameRepository->findBySearch((new SearchMatchModel)->setPlayer($oldPlayer));
-        foreach($matchGames as $matchGame) {
-            /**
-             * @var MatchGame $matchGame
-             * @var Player $oldPlayer
-             */
-            $matchGame->addPlayer($player);
-            $matchGame->removePlayer($oldPlayer);
-            $em->persist($matchGame);
-        }
-        $em->flush();
-
         $playerVotes = $playerVoteRepository->findByPlayer($oldPlayer);
-        foreach($playerVotes as $playerVote) {
+        foreach ($playerVotes as $playerVote) {
             /**
              * @var PlayerVote $playerVote
              */
             $playerVote->setPlayer($player);
-            $em->persist($playerVote);
+            
         }
-        $em->flush();
-
-        $output->writeln("Updating {$player->getId()} ({$player->getFullName()})");
-        $player->setLastName('Tikva');
-        $em->persist($player);
-        $em->flush();
-
-        $output->writeln("Deleting {$oldPlayer->getId()} ({$oldPlayer->getFullName()})");
-        $em->remove($oldPlayer);
-        $em->flush();
-
-        // Fai
-        $oldPlayer = $playerRepository->find(2673);
-        $player = $playerRepository->find(2664);
-        $player->setContract($oldPlayer->getContract());
-        $player->setPosition($oldPlayer->getPosition());
-        $player->setTeamName($oldPlayer->getTeamName());
+        
+        
+        
         $output->writeln("Updating player {$player->getId()} ({$player->getFullName()})");
         $em->persist($player);
         $output->writeln("Deleting player {$oldPlayer->getId()} ({$oldPlayer->getFullName()})");
         $em->remove($oldPlayer);
+        
+        
 
-        $em->flush();
-        $output->writeln("Saved.");
+        if ($flushable) {
+            $em->flush();
+            $output->writeln("flushing fai fix.");
+        }
     }
 }
