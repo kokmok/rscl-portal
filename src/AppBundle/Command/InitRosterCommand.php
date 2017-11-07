@@ -69,6 +69,16 @@ class InitRosterCommand extends ContainerAwareCommand
             // 2679 Belfodil, Werder Bremen
             // 2688 Bolingi, Royal Excel Mouscron
         ];
+        
+        $playersDataOldId = [
+            'A' =>[8,11,280,321,359,391,406,412,417,426,432,436,438,441,442,443,444,445,446,447,448,449,450,451,452],
+            'B' =>[402,408,409,422],
+            'C' =>[435],
+            'U21' =>[],
+            'L' =>[394,404,428,431,440]
+        ];
+        
+        $loanAssoc = [];
 
         $rosters = [];
 
@@ -85,35 +95,35 @@ class InitRosterCommand extends ContainerAwareCommand
          */
         $teamRepository = $em->getRepository('AppBundle:Team');
 
+        $teams = [];
         $output->writeln("Renaming Mouscron-Péruwelz to Royal Excel Mouscron...");
-        $team = $teamRepository->findOneByName('Mouscron-Péruwelz');
-        $team->setName('Royal Excel Mouscron');
-        $em->persist($team);
+        $RMP = $teamRepository->findOneByName('Mouscron-Péruwelz');
+        $RMP->setName('Royal Excel Mouscron');
+        $loanAssoc[440] = $RMP;
+        
         $output->writeln("Creating FC Metz...");
-        $team = (new Team())->setName('FC Metz');
-        $em->persist($team);
+        $metz = (new Team())->setName('FC Metz');
+        $em->persist($metz);
+        $loanAssoc[404] = $metz;
+        
         $output->writeln("Creating Fortuna Düsseldorf...");
-        $team = (new Team())->setName('Fortuna Düsseldorf');
-        $em->persist($team);
+        $FD = (new Team())->setName('Fortuna Düsseldorf');
+        $em->persist($FD);
+        $loanAssoc[428] = $FD;
+        
         $output->writeln("Creating Werder Bremen...");
-        $team = (new Team())->setName('Werder Bremen');
-        $em->persist($team);
-        $em->flush();
+        $WB = (new Team())->setName('Werder Bremen');
+        $em->persist($WB);
+        $loanAssoc[431] = $WB;
+        
+        $waas = $teamRepository->findOneByName('Waasland-Beveren');
+        $loanAssoc[394] = $waas;
 
-        $loanedToTeams = [
-            2642 => 'Waasland-Beveren',
-            2652 => 'FC Metz',
-            2676 => 'Fortuna Düsseldorf',
-            2679 => 'Werder Bremen',
-            2688 => 'Royal Excel Mouscron',
-        ];
 
-        foreach ($loanedToTeams as $playerId => $teamName) {
-            $player = $playerRepository->find($playerId);
-            $team = $teamRepository->findOneByName($teamName);
+        foreach ($loanAssoc as $playerId => $team) {
+            $player = $playerRepository->findOneByOldId($playerId);
             $output->writeln("Assigning {$player->getFullName()} to team {$team->getName()}...");
             $player->setTeam($team);
-            $em->persist($player);
         }
         $em->flush();
 
@@ -143,18 +153,18 @@ class InitRosterCommand extends ContainerAwareCommand
         }
 
         // Set exceptions
-        $meteb = $playerRepository->find(2283);
+        $meteb = $playerRepository->findOneByOldId(33);
         $meteb->setRoster(null);
         $em->persist($meteb);
 
         // Set players in active rosters
-        foreach ($playersData as $rosterLabel => $rosterPlayers) {
+        foreach ($playersDataOldId as $rosterLabel => $rosterPlayers) {
             foreach ($rosterPlayers as $id) {
                 /**
                  * load player
                  * @var Player $player
                  */
-                $player = $playerRepository->find($id);
+                $player = $playerRepository->findOneByOldId($id);
                 if ($player) {
                     $player->setRoster($rosters[$rosterLabel]);
                     $output->writeln("Assigning {$player->getFullName()} to roster {$rosterLabel}");
