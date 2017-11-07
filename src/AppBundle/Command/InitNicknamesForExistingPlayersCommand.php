@@ -5,7 +5,9 @@ namespace AppBundle\Command;
 use AppBundle\Entity\Player;
 use AppBundle\Repository\TeamRepository;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
+use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
+use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Logger\ConsoleLogger;
 use Symfony\Component\Console\Output\OutputInterface;
 
@@ -19,6 +21,8 @@ use Symfony\Component\Console\Output\OutputInterface;
  */
 class InitNicknamesForExistingPlayersCommand extends ContainerAwareCommand
 {
+    const ARGUMENT_FLUSHABLE = 'FLUSHABLE';
+    
     /**
      * {@inheritdoc}
      */
@@ -26,6 +30,7 @@ class InitNicknamesForExistingPlayersCommand extends ContainerAwareCommand
     {
         $this
             ->setName('app:init-nicknames')
+            ->addOption(self::ARGUMENT_FLUSHABLE, 'f', InputOption::VALUE_NONE)
             ->setDescription("Crée les pseudos des joueurs déjà présents dans la base de données")
         ;
     }
@@ -42,35 +47,36 @@ class InitNicknamesForExistingPlayersCommand extends ContainerAwareCommand
         $playerRepository = $em->getRepository('AppBundle:Player');
 
         $playerNicknames = [
-            2256 => 'Victor Ramos',
-            2263 => 'Felipe',
-            2265 => 'Mehdi Carcela',
-            2286 => 'Danilo',
-            2310 => 'Luis De Matos',
-            2332 => 'Fred',
-            2369 => 'Wamberto',
-            2372 => 'Almani Moreira',
-            2456 => 'Dinga',
-            2471 => 'Rubenilson',
-            2453 => 'Vinicius',
-            2503 => 'Kanu',
-            2516 => 'Edmilson',
-            2527 => 'Dos Santos',
-            2545 => 'Zefilho',
-            2546 => 'Luciano',
-            2600 => 'Zeki Fryers',
-            2601 => 'Phellype',
-            2603 => 'Reza',
-            2660 => 'Edmilson Jr',
-            2698 => 'Carlinhos',
+            6 => 'Victor Ramos',
+            13 => 'Felipe',
+            15 => 'Mehdi Carcela',
+            36 => 'Danilo',
+            60 => 'Luis De Matos',
+            83 => 'Fred',
+            121 => 'Wamberto',
+            124 => 'Almani Moreira',
+            205 => 'Vinicius',
+            208 => 'Dinga',
+            223 => 'Rubenilson',
+            254 => 'Kanu',
+            267 => 'Edmilson',
+            278 => 'Dos Santos',
+            296 => 'Zefilho',
+            297 => 'Luciano',
+            352 => 'Zeki Fryers',
+            353 => 'Phellype',
+            355 => 'Reza',
+            412 => 'Edmilson Jr',
+            450 => 'Carlinhos',
         ];
+
 
         foreach ($playerNicknames as $id => $nickName) {
             /**
              * load player object
              * @var Player $player
              */
-            $player = $playerRepository->find($id);
+            $player = $playerRepository->findOneByOldId($id);
 
             if ($player) {
                 $output->writeln("Setting nickname '{$nickName}' to {$player->getFullName()}");
@@ -80,8 +86,12 @@ class InitNicknamesForExistingPlayersCommand extends ContainerAwareCommand
                 $output->writeln("Player Id not found in database: {$id} ({$nickName})");
             }
         }
+        $flushable   = true === $input->getOption(self::ARGUMENT_FLUSHABLE);
+        if ($flushable){
+            $em->flush();
+            $output->writeln("Saved.");    
+        }
 
-        $em->flush();
-        $output->writeln("Saved.");
+        
     }
 }
