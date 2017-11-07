@@ -4,8 +4,10 @@ namespace AppBundle\Command;
 
 use AppBundle\Entity\Player;
 use AppBundle\Entity\Roster;
+use AppBundle\Entity\Team;
 use AppBundle\Repository\PlayerRepository;
 use AppBundle\Repository\RosterRepository;
+use AppBundle\Repository\TeamRepository;
 use Symfony\Bundle\FrameworkBundle\Command\ContainerAwareCommand;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Logger\ConsoleLogger;
@@ -79,26 +81,45 @@ class InitRosterCommand extends ContainerAwareCommand
          * @var PlayerRepository $playerRepository
          */
         $playerRepository = $em->getRepository('AppBundle:Player');
+        /**
+         * @var TeamRepository $teamRepository
+         */
+        $teamRepository = $em->getRepository('AppBundle:Team');
 
-        foreach($rostersData as $label => $name) {
-            $output->writeln("Creating roster {$name} ({$label})");
-            $roster = (new Roster)->setName($name)->setLabel($label);
-            $em->persist($roster);
-        }
-
-        $output->writeln("Saving rosters...");
+        $output->writeln("Renaming Mouscron-Péruwelz to Royal Excel Mouscron...");
+        $team = $teamRepository->findOneByName('Mouscron-Péruwelz');
+        $team->setName('Royal Excel Mouscron');
+        $em->persist($team);
+        $output->writeln("Creating FC Metz...");
+        $team = (new Team())->setName('FC Metz');
+        $em->persist($team);
+        $output->writeln("Creating Fortuna Düsseldorf...");
+        $team = (new Team())->setName('Fortuna Düsseldorf');
+        $em->persist($team);
+        $output->writeln("Creating Werder Bremen...");
+        $team = (new Team())->setName('Werder Bremen');
+        $em->persist($team);
         $em->flush();
 
-        $rosterObjects = $rosterRepository->findAll();
-        foreach($rosterObjects as $roster) {
-            /**
-             * @var Roster $roster
-             */
-            $rosters[$roster->getLabel()] = $roster;
+        $loanedToTeams = [
+            2642 => 'Waasland-Beveren',
+            2652 => 'FC Metz',
+            2676 => 'Fortuna Düsseldorf',
+            2679 => 'Werder Bremen',
+            2688 => 'Royal Excel Mouscron',
+        ];
+
+        foreach($loanedToTeams as $playerId => $teamName) {
+            $player = $playerRepository->find($playerId);
+            $team = $teamRepository->findOneByName($teamName);
+            $output->writeln("Assigning {$player->getFullName()} to team {$team->getName()}...");
+            $player->setTeam($team);
+            $em->persist($player);
         }
-        unset($rosterObjects);
+        $em->flush();
 
         // Set everyone to roster OLD
+        $output->writeln("Setting everyone to roster OLD by default...");
         foreach($playerRepository->findAll() as $player) {
             $player->setRoster($rosters['OLD']);
             $em->persist($player);
