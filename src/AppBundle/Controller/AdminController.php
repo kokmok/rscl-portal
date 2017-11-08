@@ -9,6 +9,7 @@ use AppBundle\Entity\Team;
 use AppBundle\Form\MatchEventType;
 use AppBundle\Form\MatchGameType;
 use AppBundle\Form\PlayerType;
+use AppBundle\Form\TeamType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -105,5 +106,52 @@ class AdminController extends Controller
             return $this->redirect($request->getRequestUri());
         }
         return $this->render('pages/simple-form.html.twig', ['form' => $form->createView(), 'title' => 'Edit joueur']);
+    }
+
+    /**
+     * @param Request $request
+     * @return RedirectResponse|Response
+     * @Route("/admin/edit-team/{id}", name="edit-team")
+     */
+    public function editTeamAction(Team $team, Request $request)
+    {
+        $form = $this->createForm(TeamType::class, $team);
+
+        if ($form->handleRequest($request)->isValid()) {
+            $em = $this->get('doctrine.orm.default_entity_manager');
+            $em->persist($team);
+            $em->flush();
+            //@TODO Add flashbag
+            return $this->redirect($request->getRequestUri());
+        }
+        return $this->render('pages/simple-form.html.twig', [
+            'form' => $form->createView(),
+            'title' => 'Edit équipe'
+        ]);
+    }
+
+    /**
+     * @param Request $request
+     * @return RedirectResponse|Response
+     * @Route("/admin/new/team", name="new_team")
+     */
+    public function newTeamAction(Request $request)
+    {
+        $em = $this->get('doctrine.orm.default_entity_manager');
+        $team = new Team();
+        $form = $this->createForm(TeamType::class, $team);
+
+        if ($form->handleRequest($request)->isValid()) {
+            $em->persist($team);
+            $em->flush();
+            $this->addFlash('success', 'New team added successfully');
+
+            return $this->redirectToRoute('entity_list', ['entityName' => 'team']);
+        }
+
+        return $this->render('pages/simple-form.html.twig', [
+            'form' => $form->createView(),
+            'title' => 'Nouvelle équipe'
+        ]);
     }
 }
