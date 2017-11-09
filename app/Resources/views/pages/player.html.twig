@@ -1,0 +1,52 @@
+{% extends "/layout.html.twig" %}
+{% block metaDescription %}Joueur du Standard de Liège : {{ player.fullName }}{% endblock metaDescription %}
+{% block main %}
+    <div class="row">
+        <div id="leftCol" class="col s12 m12 l8">
+            <section>
+                <h1>{% if player.number %}{{ player.number }} - {% endif %}{{ player.fullName }}</h1>
+                <div class="clearfix"></div>
+                <label>Prénom & Nom</label>
+                <div>{{ player.firstName }} {{ player.lastName|upper }}</div>
+                {# if the player has a nickname, it will appear in the title #}
+            {% if player.birthDate %}
+                <label>Âge</label>
+                <div>{{ aged }} ans (né le {{ player.birthDate | date('d/m/Y') }})</div>
+            {% endif %}
+            {% if player.height %}
+                <label>Taille</label>
+                <div>{{ player.height / 100 }} m</div>
+            {% endif %}
+            {% if player.weight %}
+                <label>Poids</label>
+                <div>{{ player.weight }} kg</div>
+            {% endif %}
+            <label>Statut</label>
+            {% if player.roster.label == 'OLD' %}
+                <div>Ancien joueur</div>
+            {% elseif player.roster.label == 'L' %}
+                <div>Prêté à {{ player.team.name }}</div>
+            {% else %}
+                <div>{{ player.roster.name }}{% if player.onLoan %} (en prêt du {{ player.team.name }}){% endif %}</div>
+                <label>Sous contrat jusqu'au</label>
+                <div>{% if player.contract %}{{ player.contract | date('d/m/Y') }}{% else %}Durée inconnue{% endif %}</div>
+                <label>Numéro de maillot</label>
+                <div>{{ player.number }}</div>
+            {% endif %}
+                <label>Nationalité</label>
+                <div>{{ player.nationality.name }}</div>
+            {% if player.position %}
+                <label>Position</label>
+                <div>{{ player.position }}</div>
+            {% endif %}
+                <label>Description</label>
+                <div>{{ player.description }}</div>
+            </section>
+        </div>
+        <div class="rightCol col s12 m12 l4">
+            {# picture #}
+            {# dessin de maillot avec numéro en surimpression ? #}
+            {# carrière ? #}
+        </div>
+    </div>
+{% endblock main %}
