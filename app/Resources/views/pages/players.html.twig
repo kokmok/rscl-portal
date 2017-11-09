@@ -50,10 +50,14 @@
                 <tr>
                     <td>{{ player.number }}</td>
                     <td>{{ player.fullName }}</td>
-                    <td>{% if player.roster %}{{ player.roster.label }}{% else %}LOL{% endif %}</td>
+                    <td>{% if player.roster %}{{ player.roster.label }}{% else %}{#LOL#}{% endif %}</td>
                     <td>{{ player.position }}</td>
                     <td>{{ player.contract }}</td>
-                    <td><a href="{{ path('view_player', { id: player.id }) }}" class="btn">Voir la fiche</a></td>
+                    <td><a href="{{ path('view_player', { id: player.id }) }}" class="btn">Voir la fiche</a>
+                        {% if is_granted('ROLE_ADMIN') %}
+                            <a href="{{ path('edit-player',{id: player.id}) }}" class="btn">Editer</a>
+                        {% endif %}
+                    </td>
                 </tr>
             {% endfor %}
             </tbody>
