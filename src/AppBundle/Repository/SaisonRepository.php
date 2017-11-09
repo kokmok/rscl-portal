@@ -1,6 +1,8 @@
 <?php
 
 namespace AppBundle\Repository;
+
+use AppBundle\Entity\Saison;
 use Doctrine\ORM\QueryBuilder;
 
 /**
@@ -14,9 +16,32 @@ class SaisonRepository extends \Doctrine\ORM\EntityRepository
     /**
      * @return QueryBuilder
      */
-    function getActiveFirstQueryBuilder() {
+    public function getActiveFirstQueryBuilder() {
         return $this->createQueryBuilder('season')
             ->orderBy('season.running', 'DESC')
             ->addOrderBy('season.name', 'DESC');
+    }
+
+    /**
+     * @param string $name
+     * @return null|Saison
+     */
+    public function findOneByName($name) {
+        return $this->createQueryBuilder('season')
+            ->where('season.name LIKE :name')
+            ->setParameter('name', $name)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getActiveSeason()
+    {
+        return $this->createQueryBuilder('season')
+            ->where('season.running = 1')
+            ->getQuery()
+            ->getOneOrNullResult();
     }
 }

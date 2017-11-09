@@ -2,6 +2,8 @@
 
 namespace AppBundle\Repository;
 
+use AppBundle\Entity\Competition;
+
 /**
  * CompetitionRepository
  *
@@ -10,4 +12,23 @@ namespace AppBundle\Repository;
  */
 class CompetitionRepository extends \Doctrine\ORM\EntityRepository
 {
+    /**
+     * @param string $name
+     * @return Competition|null
+     */
+    public function findOneByName($name) {
+        return $this->createQueryBuilder('competition')
+            ->where('competition.name LIKE :name')
+            ->setParameter('name', $name)
+            ->getQuery()
+            ->getOneOrNullResult();
+    }
+
+    /**
+     * @return Competition|null
+     */
+    public function getProLeagueA()
+    {
+        return $this->findOneByName('Championnat');
+    }
 }

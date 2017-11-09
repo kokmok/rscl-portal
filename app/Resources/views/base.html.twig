@@ -16,10 +16,10 @@
     </head>
     <body>
     {% for message in app.session.flashBag.get('toastSuccess')%}
-        <span class="toastData hide" data-toats-type="success" data-toast-message="{{ message }}"></span>
+        <span class="toastData hide" data-toast-type="success" data-toast-message="{{ message }}"></span>
     {% endfor %}
     {% for message in app.session.flashBag.get('toastError')%}
-        <span class="toastData hide" data-toats-type="error" data-toast-message="{{ message }}"></span>
+        <span class="toastData hide" data-toast-type="error" data-toast-message="{{ message }}"></span>
     {% endfor %}
     
     

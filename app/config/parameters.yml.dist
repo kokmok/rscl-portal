@@ -35,3 +35,8 @@ parameters:
         form: AppBundle\Form\ArbitreType
         propertyList:
             - { name: fullName }
+      team:
+        class: AppBundle\Entity\Team
+        form: AppBundle\Form\TeamType
+        propertyList:
+          - { name: name }

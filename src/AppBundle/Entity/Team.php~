@@ -29,6 +29,13 @@ class Team
      * @ORM\Column(name="name", type="string", length=64)
      */
     private $name;
+
+    /**
+     * @var TeamCompetition
+     * @ORM\OneToMany(targetEntity="AppBundle\Entity\TeamCompetition",mappedBy="team")
+     */
+    private $competitionsParticipations;
+    
     public function __toString()
     {
         return $this->name;
@@ -68,6 +75,8 @@ class Team
     {
         return $this->name;
     }
+    
+    
 
     
 }
