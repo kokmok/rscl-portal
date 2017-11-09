@@ -47,6 +47,13 @@ class Player
     private $lastName;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="nickName", type="string", length=255)
+     */
+    private $nickName;
+
+    /**
      * @var int
      *
      * @ORM\Column(name="number", type="integer")
@@ -125,9 +132,18 @@ class Player
      * @ORM\Column(type="string",length=255)
      */
     private $teamName;
-    
-    
 
+    /**
+     * @var Roster
+     * @ORM\ManyToOne(targetEntity="AppBundle\Entity\Roster")
+     */
+    private $roster;
+
+    /**
+     * @var boolean
+     * @ORM\Column(name="on_loan", type="boolean")
+     */
+    private $onLoan;
 
     /**
      * Get id
@@ -189,7 +205,7 @@ class Player
     
     public function __toString()
     {
-        return $this->firstName.' '.$this->lastName;
+        return $this->nickName ?: $this->firstName.' '.$this->lastName;
     }
     
     public function getFullName(){
@@ -431,7 +447,7 @@ class Player
         return $this->seasons;
     }
 
-   
+
 
     /**
      * Set type
@@ -503,5 +519,64 @@ class Player
     public function getTeamName()
     {
         return $this->teamName;
+    }
+
+    /**
+     * Set roster
+     *
+     * @param Roster $roster
+     *
+     * @return Player
+     */
+    public function setRoster(Roster $roster = null)
+    {
+        $this->roster = $roster;
+
+        return $this;
+    }
+
+    /**
+     * Get roster
+     *
+     * @return Roster
+     */
+    public function getRoster()
+    {
+        return $this->roster;
+    }
+
+    /**
+     * @param string $nickName
+     */
+    public function setNickName($nickName)
+    {
+        $this->nickName = $nickName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getNickName()
+    {
+        return $this->nickName;
+    }
+
+    /**
+     * @param boolean $onLoan
+     * @return Player
+     */
+    public function setOnLoan($onLoan)
+    {
+        $this->onLoan = $onLoan;
+
+        return $this;
+    }
+
+    /**
+     * @return bool
+     */
+    public function isOnLoan()
+    {
+        return $this->onLoan ? true : false;
     }
 }

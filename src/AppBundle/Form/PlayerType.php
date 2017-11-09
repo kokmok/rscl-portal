@@ -3,9 +3,12 @@
 namespace AppBundle\Form;
 
 use AppBundle\Entity\Player;
+use AppBundle\Entity\Roster;
 use AppBundle\Entity\Team;
+use Doctrine\DBAL\Types\BooleanType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -21,6 +24,7 @@ class PlayerType extends AbstractType
         $builder
             ->add('firstName')
             ->add('lastName')
+            ->add('nickName', null, ['required'=>false])
             ->add('number')
 //            ->add('active')
 //            ->add('birthDate')
@@ -30,7 +34,9 @@ class PlayerType extends AbstractType
             ->add('position',null,['required'=>false])
             ->add('description',null,['required'=>false])
             ->add('type',ChoiceType::class,['choices'=>Player::TYPE_CHOICES])
+            ->add('roster', EntityType::class, ['class' => Roster::class])
             ->add('team',EntityType::class,['class'=>Team::class])
+            ->add('on_loan', CheckboxType::class, ['required'=>false])
             ->add('Envoyer',SubmitType::class)
 //            ->add('picture')
 //            ->add('nationality')
