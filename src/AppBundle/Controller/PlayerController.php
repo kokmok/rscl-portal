@@ -8,6 +8,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\HttpResponse;
 use AppBundle\Entity\Player;
+use Carbon\Carbon;
 
 class PlayerController extends Controller
 {
@@ -17,9 +18,11 @@ class PlayerController extends Controller
      */
     public function playerAction(Player $player)
     {
+        $birthDate = Carbon::createFromTimestamp($player->getBirthDate()->getTimestamp());
+
         return $this->render('pages/player.html.twig', [
             'player' => $player,
-            'aged' => 'XX', // TODO
+            'aged' => $birthDate->diffInYears(),
         ]);
     }
 
