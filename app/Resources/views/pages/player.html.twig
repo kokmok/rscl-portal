@@ -29,7 +29,7 @@
             {% else %}
                 <div>{{ player.roster.name }}{% if player.onLoan %} (en prêt du {{ player.team.name }}){% endif %}</div>
                 <label>Sous contrat jusqu'au</label>
-                <div>{% if player.contract %}{{ player.contract | date('d/m/Y') }}{% else %}Durée inconnue{% endif %}</div>
+                <div>{% if player.contract %}{{ player.contract  }}{% else %}Durée inconnue{% endif %}</div>
                 <label>Numéro de maillot</label>
                 <div>{{ player.number }}</div>
             {% endif %}
