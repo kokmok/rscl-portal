@@ -6,10 +6,13 @@ use AppBundle\Entity\Player;
 use AppBundle\Entity\Roster;
 use AppBundle\Entity\Team;
 use Doctrine\DBAL\Types\BooleanType;
+use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -25,9 +28,11 @@ class PlayerType extends AbstractType
             ->add('firstName')
             ->add('lastName')
             ->add('nickName', null, ['required'=>false])
-            ->add('number')
-//            ->add('active')
-//            ->add('birthDate')
+            // TODO selectbox with active numbers removed on creation
+            ->add('number', NumberType::class, ['required'=>false])
+            ->add('active', CheckboxType::class)
+            // TODO birthdate from 1850 till (today-8years)
+            ->add('birthDate', BirthdayType::class)
             ->add('contract')
             ->add('weight',null,['required'=>false])
             ->add('height',null,['required'=>false])
