@@ -2,9 +2,11 @@
 
 namespace AppBundle\Form;
 
+use AppBundle\Entity\Nationality;
 use AppBundle\Entity\Player;
 use AppBundle\Entity\Roster;
 use AppBundle\Entity\Team;
+use AppBundle\Repository\NationalityRepository;
 use Doctrine\DBAL\Types\BooleanType;
 use Symfony\Component\Form\Extension\Core\Type\BirthdayType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
@@ -46,7 +48,14 @@ class PlayerType extends AbstractType
             ->add('topic', UrlType::class)
             ->add('Envoyer',SubmitType::class)
 //            ->add('picture')
-//            ->add('nationality')
+            ->add('nationality', EntityType::class, [
+                'class' => Nationality::class,
+                'query_builder' => function (NationalityRepository $nr) {
+                    return $nr->getAllByNameQueryBuilder();
+                },
+                'choice_label' => 'name',
+                'preferred_choices' => ['Belge'],
+            ])
         ;
     }
     

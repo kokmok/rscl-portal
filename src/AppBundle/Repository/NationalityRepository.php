@@ -10,4 +10,11 @@ namespace AppBundle\Repository;
  */
 class NationalityRepository extends \Doctrine\ORM\EntityRepository
 {
+    public function getAllByNameQueryBuilder()
+    {
+        $qb = $this->createQueryBuilder('nationality');
+        $qb->orderBy('nationality.name');
+
+        return $qb;
+    }
 }
