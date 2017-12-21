@@ -146,6 +146,12 @@ class Player
     private $onLoan;
 
     /**
+     * @var string
+     * @ORM\Column(name="topic", type="string", nullable=true)
+     */
+    private $topic;
+
+    /**
      * Get id
      *
      * @return int
@@ -578,5 +584,24 @@ class Player
     public function isOnLoan()
     {
         return $this->onLoan ? true : false;
+    }
+
+    /**
+     * @param string $topic
+     * @return Player
+     */
+    public function setTopic(string $topic)
+    {
+        $this->topic = $topic;
+
+        return $this;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getTopic()
+    {
+        return $this->topic;
     }
 }

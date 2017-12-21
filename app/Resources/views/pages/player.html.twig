@@ -5,6 +5,7 @@
         <div id="leftCol" class="col s12 m12 l8">
             <section>
                 <h1>{% if player.number %}{{ player.number }} - {% endif %}{{ player.fullName }}</h1>
+                {% if player.topic %}<a href="{{ player.topic }}" class="btn">voir son sujet sur le forum</a>{% endif %}
                 <div class="clearfix"></div>
                 <label>Prénom & Nom</label>
                 <div>{{ player.firstName }} {{ player.lastName|upper }}</div>

@@ -14,6 +14,7 @@ use Symfony\Component\Form\Extension\Core\Type\CheckboxType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+use Symfony\Component\Form\Extension\Core\Type\UrlType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -42,6 +43,7 @@ class PlayerType extends AbstractType
             ->add('roster', EntityType::class, ['class' => Roster::class])
             ->add('team',EntityType::class,['class'=>Team::class])
             ->add('on_loan', CheckboxType::class, ['required'=>false])
+            ->add('topic', UrlType::class)
             ->add('Envoyer',SubmitType::class)
 //            ->add('picture')
 //            ->add('nationality')
