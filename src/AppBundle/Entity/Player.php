@@ -49,21 +49,21 @@ class Player
     /**
      * @var string
      *
-     * @ORM\Column(name="nickName", type="string", length=255)
+     * @ORM\Column(name="nickName", type="string", length=255, nullable=true)
      */
     private $nickName;
 
     /**
      * @var int
      *
-     * @ORM\Column(name="number", type="integer")
+     * @ORM\Column(name="number", type="integer", nullable=true)
      */
     private $number;
 
     /**
      * @var bool
      *
-     * @ORM\Column(name="active", type="boolean")
+     * @ORM\Column(name="active", type="boolean", nullable=true)
      */
     private $active;
 
@@ -98,7 +98,7 @@ class Player
     /**
      * @var string
      *
-     * @ORM\Column(name="position", type="string", length=64)
+     * @ORM\Column(name="position", type="string", length=64, nullable=true)
      */
     private $position;
 
@@ -129,7 +129,7 @@ class Player
 
     /**
      * @var string
-     * @ORM\Column(type="string",length=255)
+     * @ORM\Column(type="string",length=255, nullable=true)
      */
     private $teamName;
 
@@ -141,7 +141,7 @@ class Player
 
     /**
      * @var boolean
-     * @ORM\Column(name="on_loan", type="boolean")
+     * @ORM\Column(name="on_loan", type="boolean", nullable=true)
      */
     private $onLoan;
 
