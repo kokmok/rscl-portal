@@ -46,7 +46,6 @@ class PlayerType extends AbstractType
             ->add('team',EntityType::class,['class'=>Team::class])
             ->add('on_loan', CheckboxType::class, ['required'=>false])
             ->add('topic', UrlType::class)
-            ->add('Envoyer',SubmitType::class)
 //            ->add('picture')
             ->add('nationality', EntityType::class, [
                 'class' => Nationality::class,
@@ -56,6 +55,7 @@ class PlayerType extends AbstractType
                 'choice_label' => 'name',
                 'preferred_choices' => ['Belge'],
             ])
+            ->add('Envoyer',SubmitType::class)
         ;
     }
     
