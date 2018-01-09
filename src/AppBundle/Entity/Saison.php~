@@ -34,6 +34,12 @@ class Saison
      * @ORM\Column(type="boolean")
      */
     private $running;
+
+    /**
+     * @var Player
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Player", mappedBy="seasons")
+     */
+    private $players;
     
     
 

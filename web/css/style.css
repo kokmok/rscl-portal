@@ -26,6 +26,7 @@ a, .card .card-action a:not(.btn):not(.btn-large):not(.btn-large):not(.btn-float
   margin-bottom: 10px; }
 
 .timelineMoment {
+  z-index: 0;
   position: absolute;
   width: 100%;
   text-align: center;
@@ -35,10 +36,12 @@ a, .card .card-action a:not(.btn):not(.btn-large):not(.btn-large):not(.btn-float
     background-color: #b90e1e; }
 
 .timelineContent {
+  z-index: 1;
   width: 45%;
   font-size: 1.3em;
   vertical-align: middle;
-  padding: .25em; }
+  padding: .25em;
+  position: relative; }
 
 body {
   color: #222; }
