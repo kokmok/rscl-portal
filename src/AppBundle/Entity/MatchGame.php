@@ -134,6 +134,7 @@ class MatchGame
     /**
      * @var MatchEvent[]
      * @ORM\OneToMany(targetEntity="AppBundle\Entity\MatchEvent",mappedBy="match")
+     * @ORM\OrderBy({"minute"="ASC"})
      */
     private $events;
 
