@@ -88,6 +88,26 @@ class AdminController extends Controller
         }
         return $this->redirect($redirectUrl);
     }
+    
+    /**
+     * @param Request $request
+     * @return RedirectResponse|Response
+     * @Route("/admin/remove-match-event/{id}", name="remove_match_event")
+     */
+    public function removeMatchEventAction(MatchEvent $event, Request $request)
+    {
+        $redirectUrl = null !== $request->query->get('redirectUrl') ? $request->query->get('redirectUrl') : $request->getRequestUri();
+
+        $em = $this->get('doctrine.orm.default_entity_manager');
+        $em->remove($event);
+        if ($event->getType() === MatchEvent::TYPE_GOAL || $event->getType() === MatchEvent::TYPE_PENO) {
+            $event->getMatch()->removeGoal($event);
+            $em->persist($event->getMatch());
+        }
+        $em->flush();
+
+        return $this->redirect($redirectUrl);
+    }
 
     /**
      * @param Request $request
