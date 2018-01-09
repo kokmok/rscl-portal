@@ -57,6 +57,11 @@ class EntityListMapper
         return $this->em->getRepository($this->adminList[$entityName]['class'])->find($entityId);
     }
     
+    public function getNewEntity($entityName){
+        $refl = new \ReflectionClass($this->adminList[$entityName]['class']);
+        return $refl->newInstance() ;
+    }
+    
     public function getFormClass($entityName){
         return $this->adminList[$entityName]['form'];
     }

@@ -11,7 +11,7 @@
 {% endblock stylesheets %}
 
 {% block main %}
-    <h1>{{ title }}</h1>
+    <h1>{{ title }}</h1><a href="{{ path('entity_add',{entityName:app.request.get('_route_params').entityName}) }}" class="btn">Ajouter </a>
     <table class="dataTabled">
         <thead>
         <tr>
