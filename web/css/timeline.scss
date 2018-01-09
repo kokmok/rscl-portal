@@ -1,7 +1,7 @@
 .timelineBlock {height:40px;position: relative;clear: both;margin-bottom:10px;}
-.timelineMoment {position:absolute;width:100%;text-align:center;font-size: 1.3em;font-weight: bold;
+.timelineMoment {z-index:0;position:absolute;width:100%;text-align:center;font-size: 1.3em;font-weight: bold;
   .btn {
     background-color: $primary;
   }
 }
-.timelineContent {width:45%;font-size:1.3em;vertical-align: middle;padding:.25em;}
+.timelineContent {z-index: 1;width:45%;font-size:1.3em;vertical-align: middle;padding:.25em;position: relative;}

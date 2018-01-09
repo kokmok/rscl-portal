@@ -34,6 +34,12 @@ class Saison
      * @ORM\Column(type="boolean")
      */
     private $running;
+
+    /**
+     * @var Player
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Player", mappedBy="seasons")
+     */
+    private $players;
     
     
 
@@ -99,5 +105,46 @@ class Saison
     public function getRunning()
     {
         return $this->running;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->players = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add player
+     *
+     * @param \AppBundle\Entity\Player $player
+     *
+     * @return Saison
+     */
+    public function addPlayer(\AppBundle\Entity\Player $player)
+    {
+        $this->players[] = $player;
+
+        return $this;
+    }
+
+    /**
+     * Remove player
+     *
+     * @param \AppBundle\Entity\Player $player
+     */
+    public function removePlayer(\AppBundle\Entity\Player $player)
+    {
+        $this->players->removeElement($player);
+    }
+
+    /**
+     * Get players
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getPlayers()
+    {
+        return $this->players;
     }
 }

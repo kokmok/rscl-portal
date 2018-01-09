@@ -667,7 +667,7 @@ class MatchGame
     }
     
     public function addGoal(MatchEvent $event){
-        if (!$event->getType() === MatchEvent::TYPE_GOAL){
+        if (!$event->getType() === MatchEvent::TYPE_GOAL && !$event->getType() === MatchEvent::TYPE_PENO){
             throw new \Exception('Goal event must be type : '.MatchEvent::TYPE_GOAL);
         }
         if ($event->getTeam() !== null){
@@ -690,7 +690,7 @@ class MatchGame
     }
     public function removeGoal(MatchEvent $event){
         if (!$event->getType() === MatchEvent::TYPE_GOAL){
-            throw new \Exception('Goal event must be type : '.MatchEvent::TYPE_GOAL);
+            throw new \Exception('Goal event must be type : '.MatchEvent::TYPE_GOAL && !$event->getType() === MatchEvent::TYPE_PENO);
         }
         if ($event->getTeam() !== null){
           if ($event->getTeam() === $this->homeTeam) {

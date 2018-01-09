@@ -31,6 +31,7 @@
                                     <span class="btn btn-floating">{{ event.minute }}'</span>
                                 </div>
                                 <div class="timelineContent {{ alignClass }}">
+                                    {% if is_granted('ROLE_ADMIN') %}<a href="{{ path('remove_match_event',{id:event.id,redirectUrl: app.request.requestUri}) }}"><i class="fa fa-trash"></i></a>{% endif %}
                                     {% if event.player is not null and event.player.seasons.contains(match.saison) and match.homeTeam.oldId == 1%}
                                          {{ event.player is not null ? event.player : event.playerName }} {{ event.type|matchEventIcon|raw }}
                                     {% else %}

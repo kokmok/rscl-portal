@@ -77,7 +77,7 @@ class AdminController extends Controller
         if ($matchEventForm->handleRequest($request)->isValid()) {
             $em = $this->get('doctrine.orm.default_entity_manager');
             $em->persist($matchEvent);
-            if ($matchEvent->getType() === MatchEvent::TYPE_GOAL) {
+            if ($matchEvent->getType() === MatchEvent::TYPE_GOAL || $matchEvent->getType() === MatchEvent::TYPE_PENO) {
                 $match->addGoal($matchEvent);
                 $em->persist($match);
             }
@@ -86,6 +86,26 @@ class AdminController extends Controller
         } else {
             //@TODO add flashbag
         }
+        return $this->redirect($redirectUrl);
+    }
+    
+    /**
+     * @param Request $request
+     * @return RedirectResponse|Response
+     * @Route("/admin/remove-match-event/{id}", name="remove_match_event")
+     */
+    public function removeMatchEventAction(MatchEvent $event, Request $request)
+    {
+        $redirectUrl = null !== $request->query->get('redirectUrl') ? $request->query->get('redirectUrl') : $request->getRequestUri();
+
+        $em = $this->get('doctrine.orm.default_entity_manager');
+        $em->remove($event);
+        if ($event->getType() === MatchEvent::TYPE_GOAL || $event->getType() === MatchEvent::TYPE_PENO) {
+            $event->getMatch()->removeGoal($event);
+            $em->persist($event->getMatch());
+        }
+        $em->flush();
+
         return $this->redirect($redirectUrl);
     }
 

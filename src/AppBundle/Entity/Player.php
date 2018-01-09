@@ -111,7 +111,7 @@ class Player
 
     /**
      * @var Saison
-     * @ORM\ManyToMany(targetEntity="Saison")
+     * @ORM\ManyToMany(targetEntity="Saison",inversedBy="players")
      */
     private $seasons;
 
