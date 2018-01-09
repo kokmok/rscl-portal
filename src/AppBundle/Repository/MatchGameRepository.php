@@ -64,11 +64,19 @@ class MatchGameRepository extends \Doctrine\ORM\EntityRepository
             $andWhere->add('match_game.coach=:coach');
             $qb->setParameter('coach',$search->getCoach());
         }
+        if ($search->getTeam() !== null){
+            $orX = $qb->expr()->orX();
+            $orX->add('match_game.homeTeam=:team')
+                ->add('match_game.awayTeam=:team')
+                ;
+            $andWhere->add($orX);
+            $qb->setParameter('team',$search->getTeam());
+        }
         if ($andWhere->count()){
             $qb->where($andWhere);
         }
         $qb->leftJoin('match_game.saison','saison');
-        $qb->orderBy('saison.name');
+        $qb->orderBy('match_game.date','desc');
         
         
         return $qb->getQuery()->getResult();

@@ -6,6 +6,7 @@ use AppBundle\Entity\Arbitre;
 use AppBundle\Entity\Coach;
 use AppBundle\Entity\Player;
 use AppBundle\Entity\Saison;
+use AppBundle\Entity\Team;
 use AppBundle\Repository\SaisonRepository;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
@@ -31,6 +32,7 @@ class SearchMatchType extends AbstractType
             ->add('player',EntityType::class,['required'=>false,'class'=>Player::class])
             ->add('referee',EntityType::class,['required'=>false,'class'=>Arbitre::class])
             ->add('coach',EntityType::class,['required'=>false,'class'=>Coach::class])
+            ->add('team',EntityType::class,['required'=>false,'class'=>Team::class])
             ->add('Filtrer',SubmitType::class,['attr'=>['class'=>'btn']]);
     }
     
