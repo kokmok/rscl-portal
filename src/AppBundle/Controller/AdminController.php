@@ -154,4 +154,29 @@ class AdminController extends Controller
             'title' => 'Nouvelle équipe'
         ]);
     }
+
+    /**
+     * @param Request $request
+     * @return RedirectResponse|Response
+     * @Route("/admin/new/player", name="new_player")
+     */
+    public function newPlayerAction(Request $request)
+    {
+        $em = $this->get('doctrine.orm.default_entity_manager');
+        $player = new Player();
+        $form = $this->createForm(PlayerType::class, $player);
+
+        if ($form->handleRequest($request)->isValid()) {
+            $em->persist($player);
+            $em->flush();
+            $this->addFlash('success', 'New player added successfully');
+
+            return $this->redirectToRoute('entity_list', ['entityName' => 'player']);
+        }
+
+        return $this->render('pages/simple-form.html.twig', [
+            'form' => $form->createView(),
+            'title' => 'Nouveau joueur'
+        ]);
+    }
 }
