@@ -49,12 +49,42 @@ class AdminListController extends Controller
             $this->get('app.toaster')->addSuccess('Édition réussie');
             return $this->redirectToRoute('entity_list',['entityName'=>$entityName]);
         } elseif ($form->isSubmitted()) {
-            $this->get('app.toaster')->addSuccess('Édition réussie');
+            $this->get('app.toaster')->addError('Édition échoué');
         }
         
         return $this->render('pages/simple-form.html.twig', [
             'form' => $form->createView(),
             'title' => 'Edit '.$entityName,
+        ]);
+    }
+    
+    /**
+     * @param $entityName
+     * @param Request $request
+     * @return RedirectResponse|Response
+     * @Route("/admin/add/{entityName}",name="entity_add")
+     */
+    public function addAction($entityName,Request $request)
+    {
+        $entity = $this->get('app.entity_list_mapper')->getNewEntity($entityName);
+        $formTypeClass= $this->get('app.entity_list_mapper')->getFormClass($entityName);
+        
+        $form = $this->createForm($formTypeClass,$entity);
+        
+        if ($form->handleRequest($request)->isValid()) {
+            $em = $this->get('doctrine.orm.entity_manager');
+            $em->persist($entity);
+            $em->flush();
+            
+            $this->get('app.toaster')->addSuccess('Ajout réussie');
+            return $this->redirectToRoute('entity_list',['entityName'=>$entityName]);
+        } elseif ($form->isSubmitted()) {
+            $this->get('app.toaster')->addError('Ajout échoué');
+        }
+        
+        return $this->render('pages/simple-form.html.twig', [
+            'form' => $form->createView(),
+            'title' => 'Add '.$entityName,
         ]);
     }
 }
