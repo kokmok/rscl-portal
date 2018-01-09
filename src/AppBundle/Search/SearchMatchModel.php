@@ -13,6 +13,7 @@ use AppBundle\Entity\Arbitre;
 use AppBundle\Entity\Coach;
 use AppBundle\Entity\Player;
 use AppBundle\Entity\Saison;
+use AppBundle\Entity\Team;
 
 class SearchMatchModel
 {
@@ -35,6 +36,11 @@ class SearchMatchModel
      * @var Coach
      */
     private $coach;
+
+    /**
+     * @var Team
+     */
+    private $team;
 
     /**
      * @return Saison
@@ -103,6 +109,25 @@ class SearchMatchModel
         $this->coach = $coach;
         return $this;
     }
+
+    /**
+     * @return Team
+     */
+    public function getTeam()
+    {
+        return $this->team;
+    }
+
+    /**
+     * @param Team $team
+     */
+    public function setTeam(Team $team)
+    {
+        $this->team = $team;
+        return $this;
+    }
+    
+    
     
     
 

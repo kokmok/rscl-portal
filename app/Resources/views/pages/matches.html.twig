@@ -91,6 +91,7 @@
                 <th>Match</th>
                 <th>Score</th>
                 <th>Saison</th>
+                <th>Date</th>
                 <th>Arbitre</th>
                 <th>Coach</th>
                 <th></th>
@@ -102,6 +103,7 @@
                     <td>{{ match.title }}</td>
                     <td>{{ match.score }}</td>
                     <td>{{ match.saison.name }}</td>
+                    <td>{{ match.date|date('m-d-Y H:i') }}</td>
                     <td>{{ match.arbitre }}</td>
                     <td>{{ match.coach }}</td>
                     <td><a href="{{ path('view_match',{id: match.id}) }}" class="btn">Voir la fiche</a></td>
