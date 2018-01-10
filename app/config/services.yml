@@ -32,7 +32,7 @@ services:
     # add more services, or override services that need manual wiring
     app.entity_list_mapper:
       class: AppBundle\Lister\EntityListMapper
-      arguments: ["%enties_list%","@doctrine.orm.entity_manager"]
+      arguments: ["%app.entites_list%","@doctrine.orm.entity_manager"]
       public: true
     app.toaster:
       class: AppBundle\Toaster\FlashbagToast
