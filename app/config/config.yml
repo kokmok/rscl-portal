@@ -77,3 +77,34 @@ fos_user:
     from_email:
         address: "%mailer_user%"
         sender_name: "%mailer_user%"
+        
+app:
+  entities_list:
+      match: 
+        class: AppBundle\Entity\MatchGame
+        form: AppBundle\Form\MatchGameType
+        propertyList:
+            - { name: title } 
+            - { name: date, type: TYPE_DATE } 
+            - { name: score }
+      player: 
+        class: AppBundle\Entity\Player
+        form: AppBundle\Form\PlayerType
+        propertyList:
+            - { name: fullName }
+      referee:
+        class: AppBundle\Entity\Arbitre
+        form: AppBundle\Form\ArbitreType
+        propertyList:
+            - { name: fullName }
+      team:
+        class: AppBundle\Entity\Team
+        form: AppBundle\Form\TeamType
+        propertyList:
+          - { name: name }
+      saison:
+          class: AppBundle\Entity\Saison
+          form: AppBundle\Form\SaisonType
+          propertyList:
+              - { name: name }
+              - { name: running }

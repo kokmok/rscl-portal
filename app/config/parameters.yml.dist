@@ -40,3 +40,9 @@ parameters:
         form: AppBundle\Form\TeamType
         propertyList:
           - { name: name }
+      saison:
+          class: AppBundle\Entity\Saison
+          form: AppBundle\Form\SaisonType
+          propertyList:
+              - { name: name }
+              - { name: running }
