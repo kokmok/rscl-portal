@@ -21,10 +21,7 @@ class AppExtension extends Extension
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
 
-        
-//        dump($config);
-//        die();
-//        $container->setParameter('app.test', $config['test']);
+       
         $container->setParameter('app.entites_list', $config['entities_list']);
         
     }
