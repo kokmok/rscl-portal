@@ -2,6 +2,8 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Search\TeamFilterModel;
+use AppBundle\Search\TeamFilterType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -37,11 +39,11 @@ class PlayerController extends Controller
         $rosterRepository = $em->getRepository('AppBundle:Roster');
         $rosters = $rosterRepository->findAllActive();
         $players = $playerRepository->findAllSorted($rosters);
-//        $searchPlayerModel = new SearchPlayerModel();
-//        $form = $this->createForm(SearchPlayerType::class, $searchPlayerModel);
+        $searchPlayerModel = new TeamFilterModel();
+        $form = $this->createForm(TeamFilterType::class, $searchPlayerModel);
 
         return $this->render('pages/players.html.twig', [
-            //'form' => $form->createView(),
+            'form' => $form->createView(),
             'players' => $players,
             'rosters' => $rosters,
         ]);
