@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="season")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\SaisonRepository")
+ * 
  */
 class Saison
 {
@@ -37,7 +38,7 @@ class Saison
 
     /**
      * @var Player
-     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Player", mappedBy="seasons")
+     * @ORM\ManyToMany(targetEntity="AppBundle\Entity\Player", mappedBy="seasons",cascade={"persist","refresh"})
      */
     private $players;
     
@@ -124,7 +125,7 @@ class Saison
     public function addPlayer(\AppBundle\Entity\Player $player)
     {
         $this->players[] = $player;
-
+        $player->addSeason($this);
         return $this;
     }
 
@@ -141,7 +142,7 @@ class Saison
     /**
      * Get players
      *
-     * @return \Doctrine\Common\Collections\Collection
+     * @return Player[]
      */
     public function getPlayers()
     {

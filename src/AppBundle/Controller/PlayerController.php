@@ -38,10 +38,16 @@ class PlayerController extends Controller
         $playerRepository = $em->getRepository('AppBundle:Player');
         $rosterRepository = $em->getRepository('AppBundle:Roster');
         $rosters = $rosterRepository->findAllActive();
-        $players = $playerRepository->findAllSorted($rosters);
         $searchPlayerModel = new TeamFilterModel();
         $form = $this->createForm(TeamFilterType::class, $searchPlayerModel);
 
+        if ($form->handleRequest($request)->isValid()){
+            $players = $playerRepository->findFiltered($searchPlayerModel);
+        }
+        else{
+            $players = $playerRepository->findAllSorted($rosters);
+        }
+        
         return $this->render('pages/players.html.twig', [
             'form' => $form->createView(),
             'players' => $players,
