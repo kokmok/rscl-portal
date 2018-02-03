@@ -44,6 +44,7 @@ class AdminListController extends Controller
         if ($form->handleRequest($request)->isValid()) {
             $em = $this->get('doctrine.orm.entity_manager');
             $em->persist($entity);
+            $this->get('app.entity.listener')->preUpdate($em,$entity);
             $em->flush();
             
             $this->get('app.toaster')->addSuccess('Édition réussie');

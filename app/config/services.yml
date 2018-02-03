@@ -38,3 +38,8 @@ services:
       class: AppBundle\Toaster\FlashbagToast
       arguments: ["@session"]
       public: true
+      
+    
+    app.entity.listener:
+      public: true
+      class: AppBundle\Listener\EntityCustomListener
