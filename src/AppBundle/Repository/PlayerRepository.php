@@ -4,6 +4,7 @@ namespace AppBundle\Repository;
 
 use AppBundle\Entity\Roster;
 use AppBundle\Entity\Saison;
+use AppBundle\Search\TeamFilterModel;
 use Doctrine\ORM\EntityRepository;
 
 /**
@@ -40,5 +41,9 @@ class PlayerRepository extends EntityRepository
             ->addOrderBy('player.number')
             ->getQuery()
             ->getResult();
+    }
+    
+    public function findFiltered(TeamFilterModel $searchPlayerModel){
+        
     }
 }

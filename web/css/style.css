@@ -157,4 +157,7 @@ header .caption {
 .classement .collection .s2, .buteurs .collection .s2, .game .collection .s2 {
   text-align: center; }
 
+.margin-labels label {
+  margin-right: 20px; }
+
 /*# sourceMappingURL=style.css.map */

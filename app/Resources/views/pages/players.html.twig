@@ -2,28 +2,29 @@
 
 {% block main %}
     <div class="row">
-        <div id="leftCol" class="col s12 m12 l8">
+        <div id="leftCol" class="col s12 m12 l8 margin-labels">
             <section >
                 <h1>Les joueurs du Standard</h1>
-                {#{ form(form) }}#}
+                
+                {{  form(form) }}
                 <div class="clearfix"></div>
             </section>
 
         </div>
-        <div class="rightCol col s12 m12 l4">
-            <section>
-                <h1>Stats</h1>
-                <ul>
-                    {% for roster in rosters %}
-                    <li>{{ roster.name }} : X joueurs{# TODO #}</li>
-                    {% endfor %}
-                </ul>
-                <script>
-                   
-                    
-                </script>
-            </section>
-        </div>
+        {#<div class="rightCol col s12 m12 l4">#}
+            {#<section>#}
+                {#<h1>Stats</h1>#}
+                {#<ul>#}
+                    {#{% for roster in rosters %}#}
+                    {#<li>{{ roster.name }} : X joueurs#}{# TODO #}{#</li>#}
+                    {#{% endfor %}#}
+                {#</ul>#}
+                {#<script>#}
+                   {##}
+                    {##}
+                {#</script>#}
+            {#</section>#}
+        {#</div>#}
     </div>
     <div class="row">
         <table>
