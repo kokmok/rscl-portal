@@ -107,5 +107,14 @@ app:
           class: AppBundle\Entity\Saison
           form: AppBundle\Form\SaisonType
           propertyList:
-              - { name: name }
               - { name: running }
+              - { name: name }
+          orderList:
+              - {column: 0, order: desc}
+      nationality:
+          class: AppBundle\Entity\Nationality
+          form: AppBundle\Form\NationalityType
+          propertyList:
+              - { name: name }
+              - { name: iso }
+          

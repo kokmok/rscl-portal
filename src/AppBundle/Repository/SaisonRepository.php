@@ -34,6 +34,11 @@ class SaisonRepository extends \Doctrine\ORM\EntityRepository
             ->getOneOrNullResult();
     }
 
+    public function findAll()
+    {
+        return parent::findBy([],['id'=>"desc"]);
+    }
+
     /**
      * @return mixed
      */

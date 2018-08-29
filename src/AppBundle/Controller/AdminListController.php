@@ -2,6 +2,7 @@
 
 namespace AppBundle\Controller;
 
+use AppBundle\Entity\Saison;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,11 +20,13 @@ class AdminListController extends Controller
     {
         $entities = $this->get('app.entity_list_mapper')->getEntitiesForList($entityName);
         $listProperties = $this->get('app.entity_list_mapper')->getPropertiesForList($entityName);
+        $orderJson = $this->get('app.entity_list_mapper')->getJsonOrderForList($entityName);
 
         return $this->render('pages/table-list.html.twig', [
             'title' => $entityName,
             'properties' => $listProperties,
             'entities' => $entities,
+            'orderJson' => $orderJson,
         ]);
     }
 
@@ -56,6 +59,43 @@ class AdminListController extends Controller
         return $this->render('pages/simple-form.html.twig', [
             'form' => $form->createView(),
             'title' => 'Edit '.$entityName,
+        ]);
+    }
+
+
+
+    /**
+     * @param Request $request
+     * @return RedirectResponse|Response
+     * @Route("/admin/add/saison")
+     * //Special case pour les saisons, sinon j'ai pas encore capté pourquoi les joueurs ne se sauvegardaient pas automatiquement
+     */
+    public function addSaison(Request $request)
+    {
+
+        $entity = new Saison();
+        $formTypeClass= $this->get('app.entity_list_mapper')->getFormClass("saison");
+
+        $form = $this->createForm($formTypeClass,$entity);
+
+        if ($form->handleRequest($request)->isValid()) {
+            $em = $this->get('doctrine.orm.entity_manager');
+            $em->persist($entity);
+            foreach ($entity->getPlayers() as $player){
+                $player->addSeason($entity);
+                $em->persist($player);
+            }
+            $em->flush();
+
+            $this->get('app.toaster')->addSuccess('Ajout réussie');
+            return $this->redirectToRoute('entity_list',['entityName'=>'saison']);
+        } elseif ($form->isSubmitted()) {
+            $this->get('app.toaster')->addError('Ajout échoué');
+        }
+
+        return $this->render('pages/simple-form.html.twig', [
+            'form' => $form->createView(),
+            'title' => 'Ajouter Saison',
         ]);
     }
     
