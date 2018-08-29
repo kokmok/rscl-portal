@@ -109,3 +109,12 @@ app:
           propertyList:
               - { name: running }
               - { name: name }
+          orderList:
+              - {column: 0, order: desc}
+      nationality:
+          class: AppBundle\Entity\Nationality
+          form: AppBundle\Form\NationalityType
+          propertyList:
+              - { name: name }
+              - { name: iso }
+          

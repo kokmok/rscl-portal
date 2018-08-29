@@ -15,7 +15,7 @@ $(function(){
     $('.datepicker').bootstrapMaterialDatePicker({format: 'DD-MM-YYYY HH:mm'});
     if ($('.dataTabled').length){
         $('.dataTabled').dataTable(
-            {"order": [[ 0, "desc" ]]}
+            {"order": $(this).data('order')}
         );
 
     }

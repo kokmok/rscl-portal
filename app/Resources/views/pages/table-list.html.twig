@@ -12,7 +12,7 @@
 
 {% block main %}
     <h1>{{ title }}</h1><a href="{{ path('entity_add',{entityName:app.request.get('_route_params').entityName}) }}" class="btn">Ajouter </a>
-    <table class="dataTabled">
+    <table class="dataTabled" data-order="{{ orderJson }}">
         <thead>
         <tr>
             {% for property in properties %}

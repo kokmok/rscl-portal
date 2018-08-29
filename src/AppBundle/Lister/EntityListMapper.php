@@ -53,6 +53,14 @@ class EntityListMapper
         return $properties;
     }
     
+    public function getJsonOrderForList($entityName){
+        $orders = [];
+        foreach ($this->adminList[$entityName]['orderList'] as $order){
+            $orders[] = [$order['column'],$order['order']];
+        }
+        return json_encode($orders);
+    }
+    
     public function getEntity($entityName,$entityId){
         return $this->em->getRepository($this->adminList[$entityName]['class'])->find($entityId);
     }

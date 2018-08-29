@@ -20,11 +20,13 @@ class AdminListController extends Controller
     {
         $entities = $this->get('app.entity_list_mapper')->getEntitiesForList($entityName);
         $listProperties = $this->get('app.entity_list_mapper')->getPropertiesForList($entityName);
+        $orderJson = $this->get('app.entity_list_mapper')->getJsonOrderForList($entityName);
 
         return $this->render('pages/table-list.html.twig', [
             'title' => $entityName,
             'properties' => $listProperties,
             'entities' => $entities,
+            'orderJson' => $orderJson,
         ]);
     }
 
