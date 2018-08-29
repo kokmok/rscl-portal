@@ -107,5 +107,5 @@ app:
           class: AppBundle\Entity\Saison
           form: AppBundle\Form\SaisonType
           propertyList:
-              - { name: name }
               - { name: running }
+              - { name: name }

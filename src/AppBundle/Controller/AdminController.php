@@ -199,4 +199,5 @@ class AdminController extends Controller
             'title' => 'Nouveau joueur'
         ]);
     }
+    
 }
