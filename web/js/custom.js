@@ -14,7 +14,9 @@ $(function(){
     // });
     $('.datepicker').bootstrapMaterialDatePicker({format: 'DD-MM-YYYY HH:mm'});
     if ($('.dataTabled').length){
-        $('.dataTabled').dataTable();
+        $('.dataTabled').dataTable(
+            {"order": [[ 0, "desc" ]]}
+        );
 
     }
     $('.toastData').each(
